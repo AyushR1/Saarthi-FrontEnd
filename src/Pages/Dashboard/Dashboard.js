@@ -21,25 +21,25 @@ export default function Dashboard() {
   const uid = firebase.auth().currentUser.uid;
   setUid(uid);
 
-
+  db.collection("users").doc(uid).set(
+    {
+      name: firebase.auth().currentUser.displayName.toString(),
+    },
+    { merge: true }
+  );
 
   const updateCurrentlyEnrolled = () => {
-    fetch('/api/currently-enrolled', {
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    })
-      .then(res => {
-        if (!res.ok) {
-          throw new Error('Network response was not ok');
-        }
-        return res.json();
-      })
-      .then(data => {
-        setCurrentlyEnrolled({ data: data });
-      })
-      .catch(error => {
-        console.error('Error fetching currently enrolled courses:', error);
+    db.collection("users")
+      .doc(uid)
+      .collection("currentlyEnrolled")
+      .get()
+      .then((docs) => {
+        let currentlyEnrolled = [];
+        docs.forEach((doc) => {
+          currentlyEnrolled.push(doc.data());
+        });
+        currentlyEnrolled = currentlyEnrolled.reverse();
+        setCurrentlyEnrolled({ data: currentlyEnrolled });
       });
   };
 
@@ -123,7 +123,7 @@ export default function Dashboard() {
       <React.Fragment>
         {playlistData.length ? (
           <div><h2 class="text-3xl text-white">Enrolled Courses</h2>
-            <br></br></div>) : (
+        <br></br></div>) : (
           <Card
             title="No Courses Enrolled"
             bordered={false}
@@ -163,13 +163,13 @@ export default function Dashboard() {
             <br></br>
             <div class="w-64 h-64 bg-white rounded-lg shadow-lg overflow-hidden flex items-center justify-center">
               <div class="text-center">
-                <Popover title="Expand, show more detailed progress">
-                  <Progress
-                    type="circle"
-                    percent={totalProgress}
-                    width={207}
-                  ></Progress>
-                </Popover>
+              <Popover title="Expand, show more detailed progress">
+              <Progress
+                type="circle"
+                percent={totalProgress}
+                width={207}
+              ></Progress>
+            </Popover>
               </div>
             </div>
           </div>

@@ -17,8 +17,9 @@ import LandingPage from "./Pages/Dashboard/Landing"
 
 import { UserContext } from "./UserContext";
 
-
-
+const auth = firebase.auth();
+const db = firebase.firestore();
+export { db };
 
 function App() {
   const [uid, setUid] = useState("");
@@ -46,13 +47,11 @@ function App() {
 }
 
 function Home() {
-
-  // const [userLoggedIn] = useAuthState(auth);
+  const [userLoggedIn] = useAuthState(auth);
 
 
   return (
-    <Dashboard/>
-    // userLoggedIn ? <Dashboard /> : <LandingPage />
+    userLoggedIn ? <Dashboard /> : <LandingPage />
   );
 }
 
