@@ -1,6 +1,5 @@
 import { message } from "antd";
 import getVideos from "../apis/getVideos";
-import { db } from "../firebase";
 
 
 const videos = [];
@@ -24,11 +23,24 @@ const handleAddCourse = async (playlistID, uid) => {
       description: item.snippet.description,
     });
   });
-  db.collection("users")
-    .doc(uid)
-    .collection("currentlyEnrolled")
-    .doc(playlistID)
-    .set({ playlistInfo, videos, totalWatched: 0 });
+
+  fetch(`/enrolled-courses/${uid}`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      playlistInfo: playlistInfo,
+      videos: videos
+    })
+  })
+    .then(response => response.json())
+    .then(data => {
+      console.log(data);
+    })
+    .catch(error => {
+      console.error(error);
+    });
   message.info("Course added Succesfuly");
 };
 
