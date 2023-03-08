@@ -11,11 +11,11 @@ import Footer from "../../Components/Footer/Footer";
 import Navbar from "../../Components/Navbar/Navbar";
 import firebase, { db } from "../../firebase";
 import { UserContext } from "../../UserContext";
-
+import axios from "axios";
 const { Meta } = Card;
 
 export default function Dashboard() {
-  const [currentlyEnrolled, setCurrentlyEnrolled] = useState({});
+  const [currentlyEnrolled, setCurrentlyEnrolled] = useState([]);
   const [totalProgress, setTotalProgress] = useState(0);
   const { setUid } = useContext(UserContext);
   const uid = firebase.auth().currentUser.uid;
@@ -29,22 +29,18 @@ export default function Dashboard() {
   );
 
   const updateCurrentlyEnrolled = () => {
-    db.collection("users")
-      .doc(uid)
-      .collection("currentlyEnrolled")
-      .get()
-      .then((docs) => {
-        let currentlyEnrolled = [];
-        docs.forEach((doc) => {
-          currentlyEnrolled.push(doc.data());
-        });
-        currentlyEnrolled = currentlyEnrolled.reverse();
-        setCurrentlyEnrolled({ data: currentlyEnrolled });
+    axios
+      .get(`http://localhost:5000/users/${uid}/enrolled-courses/playlist-info`)
+      .then(({ data }) => {
+        setCurrentlyEnrolled(data);
+      })
+      .catch((error) => {
+        console.log(error);
       });
   };
 
   useEffect(() => {
-    updateCurrentlyEnrolled();
+    updateCurrentlyEnrolled(setCurrentlyEnrolled);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [uid]);
 
@@ -80,18 +76,19 @@ export default function Dashboard() {
   };
 
   const RenderCards = ({ playlistData }) => {
+
     const renderedCards = playlistData.map((playlist) => {
       return (
         <div className="align-middle justify-items-center">
           <Card
 
-            key={playlist.playlistInfo.playlistID}
+            key={playlist.playlistID}
             className="  max-w-sm text-center"
             actions={[
               <Popover title="Start learning">
                 <Link
                   to="/video-player" state={{
-                    playlistID: playlist.playlistInfo.playlistID,
+                    playlistID: playlist.playlistID,
                     tracking: true,
                   }}
                 >
@@ -105,7 +102,7 @@ export default function Dashboard() {
                   }
                   placement="top"
                   onConfirm={() =>
-                    handleCourseDelete(playlist.playlistInfo.playlistID)
+                    handleCourseDelete(playlist.playlistID)
                   }
                 >
                   <DeleteOutlined />
@@ -114,16 +111,16 @@ export default function Dashboard() {
 
             ]}
           >
-            <Meta title={playlist.playlistInfo.title} />
+            <Meta title={playlist.title} />
           </Card>
         </div>
       );
     });
     return (
       <React.Fragment>
-        {playlistData.length ? (
+        {currentlyEnrolled.length ? (
           <div><h2 class="text-3xl text-white">Enrolled Courses</h2>
-        <br></br></div>) : (
+            <br></br></div>) : (
           <Card
             title="No Courses Enrolled"
             bordered={false}
@@ -150,8 +147,8 @@ export default function Dashboard() {
 
         <div class="w-full lg:w-1/2 text-center">
           <div class=" w-96 mx-auto">
-            {currentlyEnrolled.data ? (
-              <RenderCards playlistData={currentlyEnrolled.data} />
+            {currentlyEnrolled.length ? (
+              <RenderCards playlistData={currentlyEnrolled} />
             ) : (
               ""
             )}
@@ -163,13 +160,13 @@ export default function Dashboard() {
             <br></br>
             <div class="w-64 h-64 bg-white rounded-lg shadow-lg overflow-hidden flex items-center justify-center">
               <div class="text-center">
-              <Popover title="Expand, show more detailed progress">
-              <Progress
-                type="circle"
-                percent={totalProgress}
-                width={207}
-              ></Progress>
-            </Popover>
+                <Popover title="Expand, show more detailed progress">
+                  <Progress
+                    type="circle"
+                    percent={totalProgress}
+                    width={207}
+                  ></Progress>
+                </Popover>
               </div>
             </div>
           </div>

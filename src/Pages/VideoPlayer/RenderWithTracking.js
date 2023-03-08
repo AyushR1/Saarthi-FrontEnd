@@ -5,11 +5,10 @@ import { useCallback, useContext, useEffect, useState } from "react";
 import ReactLinkify from "react-linkify";
 import ReactPlayer from "react-player";
 import getVideos from "../../apis/getVideos";
-import { db } from "../../firebase";
 import handleUpdateCourse from "../../firestore/updateCourse";
 import { UserContext } from "../../UserContext";
 import "./VideoPlayer.css";
-
+import axios from "axios";
 const { Sider, Content } = Layout;
 const { Panel } = Collapse;
 
@@ -28,15 +27,14 @@ const RenderWithTracking = ({ playlistID }) => {
   const selectedMenuItem = currentVideo;
 
   const getDataCB = useCallback(async () => {
-    const data = await db
-      .collection("users")
-      .doc(uid)
-      .collection("currentlyEnrolled")
-      .doc(playlistID)
-      .get();
-    setPlaylistData(data.data());
-    setFirstUnwatchedVideo(data.data());
-    setVideoDescription(data.data().videos[0].description);
+    axios
+      .get(`http://localhost:5000/enrolled-courses/${uid}/${playlistID}`)
+      .then(({ data }) => {
+        console.log('data ---> ', data);
+        setPlaylistData(data);
+        setFirstUnwatchedVideo(data);
+        setVideoDescription(data.videos[0].description);
+      })
   }, [playlistID, uid]);
 
   const syncPlayList = useCallback(async () => {
@@ -75,36 +73,28 @@ const RenderWithTracking = ({ playlistID }) => {
   };
 
   const findVideoAndSetWatched = async (videoId, setWatched = false) => {
-    db.collection("users")
-      .doc(uid)
-      .collection("currentlyEnrolled")
-      .doc(playlistData.playlistInfo.playlistID)
-      .get()
-      .then((data) => {
-        data = data.data();
-        data.videos.forEach((video) => {
-          if (video.videoId === videoId) {
-            if (!setWatched) {
-              video.watched = !video.watched;
-            } else {
-              video.watched = setWatched;
-            }
-            return;
-          }
-        });
+    try {
+      const response = await axios.get(`http://localhost:5000/enrolled-courses/${uid}/${playlistID}`);
+      const data = response.data;
 
-        db.collection("users")
-          .doc(uid)
-          .collection("currentlyEnrolled")
-          .doc(playlistData.playlistInfo.playlistID)
-          .set({
-            playlistInfo: data.playlistInfo,
-            videos: data.videos,
-            totalWatched: data.totalWatched + 1,
-          });
-        setPlaylistData(data);
+      data.videos.forEach((video) => {
+        if (video.videoId === videoId) {
+          video.watched = setWatched ? true : !video.watched;
+        }
       });
+
+      await axios.post(`http://localhost:5000/enrolled-courses/${uid}/${playlistID}`, {
+        playlistInfo: data.playlistInfo,
+        videos: data.videos,
+        totalWatched: data.totalWatched + 1,
+      });
+
+      setPlaylistData(data);
+    } catch (error) {
+      console.error(error);
+    }
   };
+
 
   const handleVideoEnded = () => {
     let idx;
