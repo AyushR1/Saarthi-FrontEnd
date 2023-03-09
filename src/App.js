@@ -11,7 +11,7 @@ import RenderWithTracking from "./Pages/VideoPlayer/RenderWithTracking";
 import Notes from "./Pages/NotesPage/NotesPage"
 import VideoPlayer from "./Pages/VideoPlayer/VideoPlayer";
 import LandingPage from "./Pages/Dashboard/Landing"
-
+import SearchPage from "./Pages/Dashboard/SearchPage"
 import { UserContext } from "./UserContext";
 
 const auth = firebase.auth();
@@ -28,6 +28,7 @@ function App() {
           <Route path={"/video-player"} element={<VideoPlayer />} />
           <Route path={"/video-player-track"} element={<RenderWithTracking />} />
           <Route path={"/notes"} element={<Notes />} />
+          <Route path={"/search"} element={<SearchPage />} />
           <Route
             path={"/video-player-no-track"}
             element={<RenderWithoutTracking />}

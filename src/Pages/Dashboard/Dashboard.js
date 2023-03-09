@@ -146,7 +146,7 @@ export default function Dashboard() {
 
             ]}
           >
-            <Meta title={playlist.title} />
+          <Meta title={playlist.title} />
           </Card>
             <Popover title="Expand, show more detailed progress">
               <Progress

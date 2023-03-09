@@ -11,14 +11,12 @@ import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
 
 import { Link } from "react-router-dom";
 import React, { useState } from "react";
-import instance from "../../apis/youtube";
-import PlaylistsList from "../../Pages/ExplorePage/PlaylistsList";
 import SearchBar from "../../Pages/ExplorePage/SearchBar";
 import "../../Pages/ExplorePage/ExplorePage.css"
+import { useNavigate } from "react-router-dom";
 const auth = firebase.auth();
 const navigation = [
   { name: 'Home', href: '/', current: true },
-  { name: 'Explore', href: '/explore', current: true },
   { name: 'Notes', href: '/notes', current: true },
 ]
 const pvt = [
@@ -115,16 +113,14 @@ function Loggedout() {
 
 
 export default function Example() {
-  const [playlists, setPlaylists] = useState([]);
-
+  const navigate = useNavigate();
   const handleSubmit = async (termFromSearchBar) => {
-    const response = await instance.get("/search", {
-      params: {
-        q: termFromSearchBar,
-      },
-    });
 
-    setPlaylists(response.data.items);
+    try {
+      navigate('/search', { state: { search: termFromSearchBar } });
+    } catch (error) {
+      console.log(error);
+    }
   };
   return (
     <Disclosure as="nav" className="">
@@ -174,10 +170,7 @@ export default function Example() {
                       // </Link>
                     ))}
                     <div>
-
-
                       <SearchBar handleFormSubmit={handleSubmit} />
-                      <PlaylistsList playlists={playlists} />
                     </div>
 
                   </div>
@@ -207,6 +200,7 @@ export default function Example() {
                   {item.name}
                 </Disclosure.Button>
               ))}
+                  <SearchBar handleFormSubmit={handleSubmit} />
             </div>
           </Disclosure.Panel>
         </>
