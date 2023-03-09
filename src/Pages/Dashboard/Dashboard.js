@@ -14,6 +14,7 @@ import axios from "axios";
 
 import CoursesPage from "./CoursesPage";
 const { Meta } = Card;
+
 export default function Dashboard() {
   const [currentlyEnrolled, setCurrentlyEnrolled] = useState([]);
   const [totalProgress, setTotalProgress] = useState(0);
@@ -43,40 +44,78 @@ export default function Dashboard() {
   }, []);
 
   const handleCourseDelete = (playlistID) => {
-
     axios.delete(`http://localhost:5000/enrolled-courses/${uid}/${playlistID}`)
       .then(response => {
-        console.log(response.data);
-        message.success("Course Deleted Succesfully, Refresh the page !");
+        message.success("Course Deleted Succesfully!");
+        updateCurrentlyEnrolled(); // Call updateCurrentlyEnrolled after successful deletion
       })
       .catch(error => {
         console.error(error);
       });
-    updateCurrentlyEnrolled();
   };
 
   const calculateAndSetTotalProgress = async () => {
     let totalWatched = 0,
       totalVideos = 0;
-    const data = await db
-      .collection("users")
-      .doc(uid)
-      .collection("currentlyEnrolled")
-      .get();
-    data.docs.forEach((doc) => {
-      totalWatched += doc.data().totalWatched;
-      totalVideos += doc.data().videos.length;
-    });
-    const progress = Math.round((totalWatched / totalVideos) * 100);
-    setTotalProgress(progress);
+
+    try {
+      const response = await axios.get(`http://localhost:5000/enrolled-courses/${uid}`);
+      response.data.forEach((course) => {
+        course.videos.forEach((video) => {
+          if (video.watched) {
+            totalWatched++;
+          }
+        });
+        totalVideos += course.videos.length;
+      });
+      const progress = Math.round((totalWatched / totalVideos) * 100);
+      setTotalProgress(progress);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const RenderCards = ({ playlistData }) => {
+    const [progressMap, setProgressMap] = useState({});
+
+    const calculateAndSetSpecificlProgress = async (playlistID) => {
+      let totalWatched = 0,
+        totalVideos = 0;
+
+      try {
+        const response = await axios.get(`http://localhost:5000/enrolled-courses/${uid}/${playlistID}`);
+
+        response.data.videos.forEach((video) => {
+          if (video.watched) {
+            totalWatched++;
+          }
+          totalVideos++;
+        });
+
+        const progressspec = Math.round((totalWatched / totalVideos) * 100);
+
+        setProgressMap(prevState => ({
+          ...prevState,
+          [playlistID]: progressspec
+        }));
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+
+    useEffect(() => {
+      playlistData.flat().forEach((playlist) => {
+        calculateAndSetSpecificlProgress(playlist.playlistID);
+      });
+    }, []);
+
     const renderedCards = playlistData.flat().map((playlist) => {
+      const progressspec = progressMap[playlist.playlistID];
 
       return (
         <div className="align-middle justify-items-center">
-          <Card
+          <div className=" columns-2"><Card
             key={playlist.playlistID}
             className="  max-w-sm text-center"
             actions={[
@@ -109,27 +148,21 @@ export default function Dashboard() {
           >
             <Meta title={playlist.title} />
           </Card>
+            <Popover title="Expand, show more detailed progress">
+              <Progress
+                type="circle"
+                percent={progressspec}
+                width={150}
+              ></Progress>
+            </Popover>
+          </div>
         </div>
       );
     });
+
     return (
       <React.Fragment>
-        {playlistData.length ? (
-          <div><h2 class="text-3xl text-white">Enrolled Courses</h2>
-            <br></br></div>) : (
-          <Card
-            title="No Courses Enrolled"
-            bordered={false}
-            style={{ width: 300, height: 350, marginTop: 110 }}
-          >
-            <h5 align="left">
-              You haven't enrolled in any course, please{" "}
-              <Link to="/explore">Search</Link> for a course and enroll in it by
-              clicking the <PlusCircleOutlined /> button.
-            </h5>
-          </Card>
-        )}
-        {renderedCards}
+        <div><h2 class="text-3xl text-white">Enrolled Courses</h2>        {renderedCards}</div>
       </React.Fragment>
     );
   };
@@ -142,11 +175,21 @@ export default function Dashboard() {
       <div class=" my-20 flex flex-col md:flex-row  items-center justify-center">
 
         <div class="w-full lg:w-1/2 text-center">
-          <div class=" w-96 mx-auto">
+          <div class=" md:mx-48 w-auto ">
             {currentlyEnrolled.length ? (
               <RenderCards playlistData={currentlyEnrolled} />
             ) : (
-              ""
+              <Card
+              title="No Courses Enrolled"
+              bordered={false}
+              style={{ width: 300, height: 350, marginTop: 110 }}
+            >
+              <h5 align="left">
+                You haven't enrolled in any course, please{" "}
+                <Link to="/explore">Search</Link> for a course and enroll in it by
+                clicking the <PlusCircleOutlined /> button.
+              </h5>
+            </Card>
             )}
           </div>
         </div>
@@ -168,7 +211,7 @@ export default function Dashboard() {
           </div>
         </div>
       </div>
-      <CoursesPage/>
+      <CoursesPage />
     </div >
 
   );

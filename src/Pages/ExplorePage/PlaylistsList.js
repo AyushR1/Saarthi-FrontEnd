@@ -10,7 +10,7 @@ const PlaylistsList = ({ playlists }) => {
       />
     );
   });
-  return <div className="list">{renderedPlaylists}</div>;
+  return <div>{renderedPlaylists}</div>;
 };
 
 export default PlaylistsList;
