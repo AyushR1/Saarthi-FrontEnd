@@ -1,6 +1,5 @@
 import {
   CaretRightOutlined,
-  CopyOutlined,
   PlusCircleOutlined,
   YoutubeOutlined,
 } from "@ant-design/icons";
@@ -8,7 +7,6 @@ import { Avatar, Card, Popconfirm, Popover } from "antd";
 
 import { useContext } from "react";
 import { Link } from "react-router-dom";
-import handleAddToBookamrk from "../../firestore/addBookmarks";
 import handleAddCourse from "../../firestore/addCourse";
 import { UserContext } from "../../UserContext";
 import "./ExplorePage.css";
@@ -47,18 +45,6 @@ const PlaylistItem = ({ playlistID, playlist }) => {
           <a href={yt} target="_blank" rel="noreferrer">
             <YoutubeOutlined key="Open In Youtube" />
           </a>
-        </Popover>,
-        <Popover content="Add to bookmark">
-          <CopyOutlined
-            onClick={() => {
-              handleAddToBookamrk(
-                playlist.id.playlistId,
-                uid,
-                playlist.snippet.title,
-                playlist.snippet.thumbnails.high.url
-              );
-            }}
-          />
         </Popover>,
       ]}
       bordered={true}

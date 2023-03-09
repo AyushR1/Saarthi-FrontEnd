@@ -11,14 +11,12 @@ import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
 
 import { Link } from "react-router-dom";
 const navigation = [
-  { name: 'Dashboard', href: '/', current: true },
+  { name: 'Home', href: '/', current: true },
   { name: 'Explore', href: '/explore', current: true },
-  { name: 'Courses', href: '/courses', current: true },
   { name: 'Notes', href: '/notes', current: true },
 ]
 const pvt = [
-  { name: 'Bookmark', href: '/bookmarks', current: true },
-  { name: 'Settings', href: '/settings', current: true },
+  { name: 'Dashboard', href: '/', current: true },
 ]
 
 const auth = firebase.auth();
@@ -37,64 +35,64 @@ function Home() {
 
 function Loggedin() {
 
-const user = firebase.auth().currentUser;
+  const user = firebase.auth().currentUser;
   return (
     <Menu as="div" className="relative ml-3">
-    <div>
-      <Menu.Button className="flex rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
-        <span className="sr-only">Open user menu</span>
-        <img
-          className="h-8 w-8 rounded-full"
-          src={user.photoURL}
-          alt=""
-        />
-      </Menu.Button>
-    </div>
-    <Transition
-      as={Fragment}
-      enter="transition ease-out duration-100"
-      enterFrom="transform opacity-0 scale-95"
-      enterTo="transform opacity-100 scale-100"
-      leave="transition ease-in duration-75"
-      leaveFrom="transform opacity-100 scale-100"
-      leaveTo="transform opacity-0 scale-95"
-    >
-      
-    <Menu.Items className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
-      {pvt.map((item) => (
+      <div>
+        <Menu.Button className="flex rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
+          <span className="sr-only">Open user menu</span>
+          <img
+            className="h-8 w-8 rounded-full"
+            src={user.photoURL}
+            alt=""
+          />
+        </Menu.Button>
+      </div>
+      <Transition
+        as={Fragment}
+        enter="transition ease-out duration-100"
+        enterFrom="transform opacity-0 scale-95"
+        enterTo="transform opacity-100 scale-100"
+        leave="transition ease-in duration-75"
+        leaveFrom="transform opacity-100 scale-100"
+        leaveTo="transform opacity-0 scale-95"
+      >
 
-        <Menu.Item>
-          {({ active }) => (
-            <Link
-              to={item.href}
-              className={classNames(active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700')}
-            >
-              {item.name}
-            </Link>
-          )}
-        </Menu.Item>
-      ))}
-      <Menu.Item>
-        {({ active }) => (
-          <button
-            onClick={() => auth.signOut()}
-            className={classNames(active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700')}
-          >
-            Sign out
-          </button>
-        )}
-      </Menu.Item>
-    </Menu.Items>
-    </Transition>
-  </Menu>
+        <Menu.Items className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+          {pvt.map((item) => (
+
+            <Menu.Item>
+              {({ active }) => (
+                <Link
+                  to={item.href}
+                  className={classNames(active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700')}
+                >
+                  {item.name}
+                </Link>
+              )}
+            </Menu.Item>
+          ))}
+          <Menu.Item>
+            {({ active }) => (
+              <button
+                onClick={() => auth.signOut()}
+                className={classNames(active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700')}
+              >
+                Sign out
+              </button>
+            )}
+          </Menu.Item>
+        </Menu.Items>
+      </Transition>
+    </Menu>
 
 
   );
 }
 function Loggedout() {
   return (
-  <button  onClick={signInWithGoogle} class="py-2 px-2 font-medium text-white rounded hover:bg-blue-500 hover:text-white transition duration-300"
-  >SignIn</button>
+    <button onClick={signInWithGoogle} class="py-2 px-2 font-medium text-white rounded hover:bg-blue-500 hover:text-white transition duration-300"
+    >SignIn</button>
   );
 }
 

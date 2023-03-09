@@ -7,7 +7,6 @@ import { Card, message, Popconfirm, Popover, Progress } from "antd";
 import "firebase/firestore";
 import React, { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import Footer from "../../Components/Footer/Footer";
 import Navbar from "../../Components/Navbar/Navbar";
 import firebase, { db } from "../../firebase";
 import { UserContext } from "../../UserContext";
@@ -168,7 +167,6 @@ export default function Dashboard() {
           </div>
         </div>
       </div>
-      <Footer />
     </div >
 
   );
