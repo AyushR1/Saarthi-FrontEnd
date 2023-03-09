@@ -11,8 +11,9 @@ import Navbar from "../../Components/Navbar/Navbar";
 import firebase, { db } from "../../firebase";
 import { UserContext } from "../../UserContext";
 import axios from "axios";
-const { Meta } = Card;
 
+import CoursesPage from "./CoursesPage";
+const { Meta } = Card;
 export default function Dashboard() {
   const [currentlyEnrolled, setCurrentlyEnrolled] = useState([]);
   const [totalProgress, setTotalProgress] = useState(0);
@@ -167,6 +168,7 @@ export default function Dashboard() {
           </div>
         </div>
       </div>
+      <CoursesPage/>
     </div >
 
   );
