@@ -1,6 +1,6 @@
 import { message } from "antd";
 import getVideos from "../apis/getVideos";
-
+import axios from "axios";
 
 const videos = [];
 const handleAddCourse = async (playlistID, uid) => {
@@ -24,24 +24,22 @@ const handleAddCourse = async (playlistID, uid) => {
     });
   });
 
-  fetch(`http://localhost:5000/enrolled-courses/${uid}`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({
-      playlistInfo: playlistInfo,
-      videos: videos
-    })
+  axios.post(`http://localhost:5000/enrolled-courses/${uid}`, {
+    playlistInfo: playlistInfo,
+    videos: videos
   })
-    .then(response => response.json())
-    .then(data => {
-      console.log(data);
-    })
-    .catch(error => {
-      console.error(error);
-    });
-  message.info("Course added Succesfuly");
+  .then(response => {
+    console.log(response.data);
+    message.info("Course added successfully");
+  })
+  .catch(error => {
+    console.error(error);
+    if (error.response && error.response.status === 400 && error.response.data.error === "Playlist already enrolled") {
+      message.warning("Course already enrolled");
+    } else {
+      message.error("Error adding course");
+    }
+  });
 };
 
 export default handleAddCourse;

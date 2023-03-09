@@ -21,13 +21,6 @@ export default function Dashboard() {
   const uid = firebase.auth().currentUser.uid;
   setUid(uid);
 
-  db.collection("users").doc(uid).set(
-    {
-      name: firebase.auth().currentUser.displayName.toString(),
-    },
-    { merge: true }
-  );
-
   const updateCurrentlyEnrolled = () => {
     axios
       .get(`http://localhost:5000/users/${uid}/enrolled-courses/playlist-info`)
@@ -50,12 +43,15 @@ export default function Dashboard() {
   }, []);
 
   const handleCourseDelete = (playlistID) => {
-    db.collection("users")
-      .doc(uid)
-      .collection("currentlyEnrolled")
-      .doc(playlistID)
-      .delete();
-    message.success("Course Deleted Succesfully, Refresh the page !");
+
+    axios.delete(`http://localhost:5000/enrolled-courses/${uid}/${playlistID}`)
+      .then(response => {
+        console.log(response.data);
+        message.success("Course Deleted Succesfully, Refresh the page !");
+      })
+      .catch(error => {
+        console.error(error);
+      });
     updateCurrentlyEnrolled();
   };
 
@@ -76,12 +72,11 @@ export default function Dashboard() {
   };
 
   const RenderCards = ({ playlistData }) => {
+    const renderedCards = playlistData.flat().map((playlist) => {
 
-    const renderedCards = playlistData.map((playlist) => {
       return (
         <div className="align-middle justify-items-center">
           <Card
-
             key={playlist.playlistID}
             className="  max-w-sm text-center"
             actions={[
@@ -92,6 +87,7 @@ export default function Dashboard() {
                     tracking: true,
                   }}
                 >
+
                   <CaretRightOutlined key="play" />
                 </Link>
               </Popover>,
@@ -118,7 +114,7 @@ export default function Dashboard() {
     });
     return (
       <React.Fragment>
-        {currentlyEnrolled.length ? (
+        {playlistData.length ? (
           <div><h2 class="text-3xl text-white">Enrolled Courses</h2>
             <br></br></div>) : (
           <Card
