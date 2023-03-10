@@ -2,9 +2,9 @@ import { message } from "antd";
 import getVideos from "../apis/getVideos";
 import axios from "axios";
 
-const videos = [];
 const handleAddCourse = async (playlistID, uid) => {
-  //
+
+  const videos = [];
   if (uid === "") {
     message.error("Not Logged In");
     return;
@@ -23,6 +23,7 @@ const handleAddCourse = async (playlistID, uid) => {
       description: item.snippet.description,
     });
   });
+  console.log(videos);
   axios.post(`http://localhost:5000/add`, {
     uid: uid,
     playlistInfo: playlistInfo,
