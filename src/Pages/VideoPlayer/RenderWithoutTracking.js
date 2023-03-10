@@ -100,7 +100,8 @@ const RenderWithoutTracking = ({ playlistID }) => {
   };
 
   return (
-    <div>    <Navbar />
+    <div>
+      <Navbar />
       <Layout>
         <Sider
           width={384}
