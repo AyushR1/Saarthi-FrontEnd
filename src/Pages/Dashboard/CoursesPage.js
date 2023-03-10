@@ -9,10 +9,10 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import handleAddCourse from "../../firestore/addCourse";
 import { UserContext } from "../../UserContext";
+
+import firebase from "../../firebase";
 import { getAllcourses } from "../../utils/CoursesApi";
 const { Meta } = Card;
-
-
 export default function CoursesPage() {
   const [courses, setCourses] = useState([])
 
@@ -23,15 +23,16 @@ export default function CoursesPage() {
   const { uid } = useContext(UserContext);
 
 
+  const user = firebase.auth().currentUser;
 
   return (
     <div>
       <div className=" mx-8 md:mx-48 max-w-2xl py-16 sm:py-24 lg:max-w-none lg:py-32">
 
-        <h2 className="text-3xl font-bold text-white">Top Courses for you</h2>
-<br>
-</br>
-<h2 className="text-2xl font-bold text-white"> DSA</h2>
+        <h2 className="text-3xl font-bold text-white">Top Picks for You! </h2>
+        <br>
+        </br>
+        <h2 className="text-2xl font-bold text-white"> DSA</h2>
         <div className="mt-6 space-y-12 lg:grid lg:grid-cols-3 lg:gap-x-6 lg:space-y-0">
           {
             courses
@@ -67,11 +68,11 @@ export default function CoursesPage() {
                 </Card>
               ))
           }
-          </div>
-          <br>
-</br>
-<h2 className="text-2xl font-bold text-white"> Backend</h2>
-          <div className="mt-6 space-y-12 lg:grid lg:grid-cols-3 lg:gap-x-6 lg:space-y-0">
+        </div>
+        <br>
+        </br>
+        <h2 className="text-2xl font-bold text-white"> Backend</h2>
+        <div className="mt-6 space-y-12 lg:grid lg:grid-cols-3 lg:gap-x-6 lg:space-y-0">
           {
 
             courses

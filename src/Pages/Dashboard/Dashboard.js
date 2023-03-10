@@ -1,6 +1,7 @@
 import {
   CaretRightOutlined,
   DeleteOutlined,
+  ReloadOutlined,
   PlusCircleOutlined,
 } from "@ant-design/icons";
 import { Card, message, Popconfirm, Popover, Progress } from "antd";
@@ -44,13 +45,13 @@ export default function Dashboard() {
   const syncPlayList = async (playlistID) => {
     const youtubePlayList = await getVideos(playlistID);
     const { data: playlistData } = await axios.get(`http://localhost:5000/enrolled-courses/${uid}/${playlistID}`);
-    
+
     if (youtubePlayList.length > playlistData.videos.length) {
       const newVideos = youtubePlayList.slice(playlistData.videos.length);
       handleUpdateCourse(playlistID, uid, newVideos);
     }
   }
-  
+
 
   const updateCurrentlyEnrolled = () => {
     axios
@@ -145,59 +146,64 @@ export default function Dashboard() {
 
       return (
         <div className="align-middle justify-items-center">
-          <div className=" columns-2"><Card
-            key={playlist.playlistID}
-            className="  max-w-sm text-center"
-            actions={[
-              <Popover title="Start learning">
-                <Link
-                  to="/video-player" state={{
-                    playlistID: playlist.playlistID,
-                    tracking: true,
-                  }}
-                >
+          <br></br>
+          <div className=" columns-2 flex">
+            <Card
+              key={playlist.playlistID}
+              className=" max-w-xs md:max-w-sm text-center"
+              actions={[
+                <Popover title="Start learning">
+                  <Link
+                    to="/video-player" state={{
+                      playlistID: playlist.playlistID,
+                      tracking: true,
+                    }}
+                  >
 
-                  <CaretRightOutlined key="play" />
-                </Link>
-              </Popover>,
-              <Popover title="Delete the course">
-                <Popconfirm
-                  title={
-                    "Are you sure you wanna delete this course, all progress will be lost"
-                  }
-                  placement="top"
-                  onConfirm={() =>
-                    handleCourseDelete(playlist.playlistID)
-                  }
-                >
-                  <DeleteOutlined />
-                </Popconfirm>
-              </Popover>,
-              <Popover title="Update the course">
-                <Popconfirm
-                  title={
-                    "Check if new videos added and update"
-                  }
-                  placement="top"
-                  onConfirm={() =>
-                    syncPlayList(playlist.playlistID)
-                  }
-                >
-                  <DeleteOutlined />
-                </Popconfirm>
-              </Popover>,
+                    <CaretRightOutlined key="play" />
+                  </Link>
+                </Popover>,
+                <Popover title="Delete the course">
+                  <Popconfirm
+                    title={
+                      "Are you sure you wanna delete this course, all progress will be lost"
+                    }
+                    placement="top"
+                    onConfirm={() =>
+                      handleCourseDelete(playlist.playlistID)
+                    }
+                  >
+                    <DeleteOutlined />
+                  </Popconfirm>
+                </Popover>,
+                <Popover title="Update the course">
+                  <Popconfirm
+                    title={
+                      "Check if new videos added and update"
+                    }
+                    placement="top"
+                    onConfirm={() =>
+                      syncPlayList(playlist.playlistID)
+                    }
+                  >
+                    <ReloadOutlined />
+                  </Popconfirm>
+                </Popover>,
 
-            ]}
-          >
-            <Meta title={playlist.title} />
-          </Card>
-            <Popover title="Expand, show more detailed progress">
-              <Progress
-                type="circle"
-                percent={progressspec}
-                width={150}
-              ></Progress>
-            </Popover>
+              ]}
+            >
+              <Meta title={playlist.title} />
+            </Card>
+            <div class=" bg-white rounded-lg shadow-lg  flex items-center justify-center">
+
+              <Popover title="Expand, show more detailed progress">
+                <Progress
+                  type="circle"
+                  percent={progressspec}
+                  width={100}
+                ></Progress>
+              </Popover>
+            </div>
           </div>
         </div>
       );
@@ -205,7 +211,12 @@ export default function Dashboard() {
 
     return (
       <React.Fragment>
-        <div><h2 class="text-3xl text-white">Enrolled Courses</h2>        {renderedCards}</div>
+        <div><h2 class="text-3xl text-white">Enrolled Courses</h2>
+          <div className="playlist-container  h-96 overflow-y-scroll">
+
+            {renderedCards}
+          </div>
+        </div>
       </React.Fragment>
     );
   };
@@ -222,31 +233,36 @@ export default function Dashboard() {
             {currentlyEnrolled.length ? (
               <RenderCards playlistData={currentlyEnrolled} />
             ) : (
-              <Card
-                title="No Courses Enrolled"
-                bordered={false}
-                style={{ width: 300, height: 350, marginTop: 110 }}
-              >
-                <h5 align="left">
-                  You haven't enrolled in any course, please{" "}
-                  <Link to="/explore">Search</Link> for a course and enroll in it by
-                  clicking the <PlusCircleOutlined /> button.
-                </h5>
-              </Card>
+              <div>
+                <h2 class="text-3xl text-white">Total Progress</h2>
+                <br></br>
+                <Card
+                  title="No Courses Enrolled"
+                  bordered={false}
+                  style={{ width: 320, height: 320, marginTop: 110 }}
+                >
+                  <h5 align="left">
+                    You haven't enrolled in any course, please{" "}
+                    <Link to="/explore">Search</Link> for a course and enroll in it by
+                    clicking the <PlusCircleOutlined /> button.
+                  </h5>
+                </Card>
+              </div>
             )}
           </div>
+
         </div>
         <div class="w-full lg:w-1/2 text-center">
-          <div class="w-64 mx-auto">
-            <h2 class="text-3xl text-white">Progress</h2>
+          <div class="w-80 mx-auto">
+            <h2 class="text-3xl text-white">Total Progress</h2>
             <br></br>
-            <div class="w-64 h-64 bg-white rounded-lg shadow-lg overflow-hidden flex items-center justify-center">
+            <div class=" w-80 h-80 bg-white rounded-lg shadow-lg overflow-hidden flex items-center justify-center">
               <div class="text-center">
                 <Popover title="Expand, show more detailed progress">
                   <Progress
                     type="circle"
                     percent={totalProgress}
-                    width={207}
+                    width={300}
                   ></Progress>
                 </Popover>
               </div>
