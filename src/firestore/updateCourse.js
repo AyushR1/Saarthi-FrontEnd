@@ -1,6 +1,5 @@
 import { message } from "antd";
-import firebase, { db } from "../firebase";
-
+import axios from "axios"
 const handleUpdateCourse = async (playListId, uid, newVideos) => {
   const videos = [];
   if (uid === "") {
@@ -16,13 +15,22 @@ const handleUpdateCourse = async (playListId, uid, newVideos) => {
       description: item.snippet.description,
     });
   });
-
-  db.collection("users")
-    .doc(uid)
-    .collection("currentlyEnrolled")
-    .doc(playListId)
-    .update({
-      videos: firebase.firestore.FieldValue.arrayUnion(...videos),
+  axios.post(`http://localhost:5000/updatecourse`, {
+    uid: uid,
+    playlistID: playListId,
+    videos: videos
+  })
+    .then(response => {
+      console.log(response.data);
+      message.info("Course Updated successfully");
+    })
+    .catch(error => {
+      console.error(error);
+      if (error.response && error.response.status === 400 && error.response.data.error === "Playlist already enrolled") {
+        message.warning("Course already enrolled");
+      } else {
+        message.error("Error adding course");
+      }
     });
   message.info("Update course successfully");
 };

@@ -23,23 +23,23 @@ const handleAddCourse = async (playlistID, uid) => {
       description: item.snippet.description,
     });
   });
-
-  axios.post(`http://localhost:5000/enrolled-courses/${uid}`, {
+  axios.post(`http://localhost:5000/add`, {
+    uid: uid,
     playlistInfo: playlistInfo,
     videos: videos
   })
-  .then(response => {
-    console.log(response.data);
-    message.info("Course added successfully");
-  })
-  .catch(error => {
-    console.error(error);
-    if (error.response && error.response.status === 400 && error.response.data.error === "Playlist already enrolled") {
-      message.warning("Course already enrolled");
-    } else {
-      message.error("Error adding course");
-    }
-  });
+    .then(response => {
+      console.log(response.data);
+      message.info("Course added successfully");
+    })
+    .catch(error => {
+      console.error(error);
+      if (error.response && error.response.status === 400 && error.response.data.error === "Playlist already enrolled") {
+        message.warning("Course already enrolled");
+      } else {
+        message.error("Error adding course");
+      }
+    });
 };
 
 export default handleAddCourse;

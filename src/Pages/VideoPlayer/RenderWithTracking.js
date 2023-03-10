@@ -30,7 +30,6 @@ const RenderWithTracking = ({ playlistID }) => {
     axios
       .get(`http://localhost:5000/enrolled-courses/${uid}/${playlistID}`)
       .then(({ data }) => {
-        console.log('data ---> ', data);
         setPlaylistData(data);
         setFirstUnwatchedVideo(data);
         setVideoDescription(data.videos[0].description);
