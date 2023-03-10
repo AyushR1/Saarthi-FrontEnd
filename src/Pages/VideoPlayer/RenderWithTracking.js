@@ -36,25 +36,6 @@ const RenderWithTracking = ({ playlistID }) => {
       })
   }, [playlistID, uid]);
 
-  const syncPlayList = useCallback(async () => {
-    const youtubePlayList = await getVideos(playlistID);
-
-    if (youtubePlayList.length > playlistData.videos.length) {
-      // new videos are added to the playlist by creator
-      const newVideos = youtubePlayList.slice(playlistData.videos.length);
-      handleUpdateCourse(playlistID, uid, newVideos);
-
-      // update dom
-      getDataCB();
-    }
-  }, [getDataCB, playlistData, uid, playlistID]);
-
-  useEffect(() => {
-    if (playlistData && playlistID) {
-      syncPlayList();
-    }
-  }, [playlistData, playlistID, syncPlayList]);
-
   useEffect(() => {
     getDataCB();
   }, [getDataCB]);

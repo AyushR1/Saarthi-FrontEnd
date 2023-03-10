@@ -12,6 +12,7 @@ import Notes from "./Pages/NotesPage/NotesPage"
 import VideoPlayer from "./Pages/VideoPlayer/VideoPlayer";
 import LandingPage from "./Pages/Dashboard/Landing"
 import SearchPage from "./Pages/Dashboard/SearchPage"
+import LandingHomePage from "./Pages/Dashboard/LandingHomePage";
 import { UserContext } from "./UserContext";
 
 const auth = firebase.auth();
@@ -23,7 +24,8 @@ function App() {
     <UserContext.Provider value={value}>
       <BrowserRouter>
         <Routes>
-          <Route exact path="/" element={<Home />} />
+          <Route exact path="/" element={<LandingHomePage />} />
+          <Route path={"/dashboard"} element={<Home />} />
           <Route path={"/explore"} element={<ExplorePage />} />
           <Route path={"/video-player"} element={<VideoPlayer />} />
           <Route path={"/video-player-track"} element={<RenderWithTracking />} />

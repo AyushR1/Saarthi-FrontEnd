@@ -23,7 +23,6 @@ const RenderWithoutTracking = ({ playlistID }) => {
   const [videoDescription, setVideoDescription] = useState("");
   const selectedMenuItem = currentVideo;
 
-
   /**************************
    * Sets the PlaylistData *
    **************************/
@@ -50,7 +49,7 @@ const RenderWithoutTracking = ({ playlistID }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [loading]);
 
-   const returnIframMarkup = () => {
+  const returnIframMarkup = () => {
     let videoURL = `https://www.youtube.com/embed/${currentVideo || playlistState.firstVideo
       }`;
     return (
@@ -101,67 +100,28 @@ const RenderWithoutTracking = ({ playlistID }) => {
   };
 
   return (
-<div>    <Navbar/>
-    <Layout>
-      <Sider
-        width={384}
-        collapsedWidth={65}
-        style={{
-          overflow: "auto",
-          height: "100%",
-          position: "fixed",
-          left: 0,
-        }}
-        className="hidden sm:block"
-      >
-        <div className="logo" />
-        <Menu theme="light" mode="inline" selectedKeys={[selectedMenuItem]}>
-          <Menu.Item key="9" className="  text-center">
-            <h2>Videos</h2>
-          </Menu.Item>
-          {playlistState.playlistArray.map((item) => (
-            <Menu.Item
-              key={item.snippet.resourceId.videoId}
-              className="menu-item"
-              onClick={(e) => {
-                handleMenuItemClick(item.snippet.resourceId.videoId, e);
-              }}
-            >
-              <Checkbox
-                className="menu-checkbox"
-                key={item.snippet.resourceId.videoId}
-              ></Checkbox>
-              {item.snippet.title}
-            </Menu.Item>
-          ))}
-          <Menu.Item key="8" style={{ paddingBottom: 80 }}></Menu.Item>
-        </Menu>
-      </Sider>
-      <Layout className="site-layout sm:ml-96" >
-        <Content style={{ margin: "10px 16px 0", overflow: "initial" }}>
-          <div
-            className="site-layout-background sm:min-h-fit"
-            style={{ textAlign: "center" }}
-          >
-            {returnIframMarkup()}
-          </div>
-          <Collapse bordered={false} defaultActiveKey={[""]}>
-            <Panel header="Description" key="1">
-              <ReactLinkify>
-                <span className="description-span">{videoDescription}</span>{" "}
-              </ReactLinkify>
-            </Panel>
-          </Collapse>
-        </Content>
-        <div className="block sm:hidden">
-          <Menu theme="light" selectedKeys={[selectedMenuItem]}>
-            <Menu.Item key="9" style={{ width: "100%", textAlign: "center" }}>
+    <div>    <Navbar />
+      <Layout>
+        <Sider
+          width={384}
+          collapsedWidth={65}
+          style={{
+            overflow: "auto",
+            height: "100%",
+            position: "fixed",
+            left: 0,
+          }}
+          className="hidden sm:block"
+        >
+          <div className="logo" />
+          <Menu theme="light" mode="inline" selectedKeys={[selectedMenuItem]}>
+            <Menu.Item key="9" className="  text-center">
               <h2>Videos</h2>
             </Menu.Item>
             {playlistState.playlistArray.map((item) => (
               <Menu.Item
                 key={item.snippet.resourceId.videoId}
-
+                className="menu-item"
                 onClick={(e) => {
                   handleMenuItemClick(item.snippet.resourceId.videoId, e);
                 }}
@@ -173,12 +133,51 @@ const RenderWithoutTracking = ({ playlistID }) => {
                 {item.snippet.title}
               </Menu.Item>
             ))}
-            <Menu.Item key="8"></Menu.Item>
+            <Menu.Item key="8" style={{ paddingBottom: 80 }}></Menu.Item>
           </Menu>
-        </div>
-      </Layout>
+        </Sider>
+        <Layout className="site-layout sm:ml-96" >
+          <Content style={{ margin: "10px 16px 0", overflow: "initial" }}>
+            <div
+              className="site-layout-background sm:min-h-fit"
+              style={{ textAlign: "center" }}
+            >
+              {returnIframMarkup()}
+            </div>
+            <Collapse bordered={false} defaultActiveKey={[""]}>
+              <Panel header="Description" key="1">
+                <ReactLinkify>
+                  <span className="description-span">{videoDescription}</span>{" "}
+                </ReactLinkify>
+              </Panel>
+            </Collapse>
+          </Content>
+          <div className="block sm:hidden">
+            <Menu theme="light" selectedKeys={[selectedMenuItem]}>
+              <Menu.Item key="9" style={{ width: "100%", textAlign: "center" }}>
+                <h2>Videos</h2>
+              </Menu.Item>
+              {playlistState.playlistArray.map((item) => (
+                <Menu.Item
+                  key={item.snippet.resourceId.videoId}
 
-    </Layout>
+                  onClick={(e) => {
+                    handleMenuItemClick(item.snippet.resourceId.videoId, e);
+                  }}
+                >
+                  <Checkbox
+                    className="menu-checkbox"
+                    key={item.snippet.resourceId.videoId}
+                  ></Checkbox>
+                  {item.snippet.title}
+                </Menu.Item>
+              ))}
+              <Menu.Item key="8"></Menu.Item>
+            </Menu>
+          </div>
+        </Layout>
+
+      </Layout>
     </div>
 
   );

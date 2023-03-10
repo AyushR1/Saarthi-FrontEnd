@@ -11,8 +11,10 @@ import Navbar from "../../Components/Navbar/Navbar";
 import firebase, { db } from "../../firebase";
 import { UserContext } from "../../UserContext";
 import axios from "axios";
+import CompletedCoursesPage from "./CompletedPage"
+import handleUpdateCourse from "../../firestore/updateCourse";
+import getVideos from "../../apis/getVideos";
 
-import CoursesPage from "./CoursesPage";
 const { Meta } = Card;
 
 export default function Dashboard() {
@@ -21,6 +23,34 @@ export default function Dashboard() {
   const { setUid } = useContext(UserContext);
   const uid = firebase.auth().currentUser.uid;
   setUid(uid);
+
+  // const syncPlayList = useCallback(async () => {
+  //   const youtubePlayList = await getVideos(playlistID);
+
+  //   if (youtubePlayList.length > playlistData.videos.length) {
+  //     // new videos are added to the playlist by creator
+  //     const newVideos = youtubePlayList.slice(playlistData.videos.length);
+  //     handleUpdateCourse(playlistID, uid, newVideos);
+  //     getDataCB()
+  //   }
+  // }, [getDataCB, playlistData, uid, playlistID]);
+
+  // useEffect(() => {
+  //   if (playlistData && playlistID) {
+  //     syncPlayList();
+  //   }
+  // }, [currentVideo]);
+
+  const syncPlayList = async (playlistID) => {
+    const youtubePlayList = await getVideos(playlistID);
+    const { data: playlistData } = await axios.get(`http://localhost:5000/enrolled-courses/${uid}/${playlistID}`);
+    
+    if (youtubePlayList.length > playlistData.videos.length) {
+      const newVideos = youtubePlayList.slice(playlistData.videos.length);
+      handleUpdateCourse(playlistID, uid, newVideos);
+    }
+  }
+  
 
   const updateCurrentlyEnrolled = () => {
     axios
@@ -143,10 +173,23 @@ export default function Dashboard() {
                   <DeleteOutlined />
                 </Popconfirm>
               </Popover>,
+              <Popover title="Update the course">
+                <Popconfirm
+                  title={
+                    "Check if new videos added and update"
+                  }
+                  placement="top"
+                  onConfirm={() =>
+                    syncPlayList(playlist.playlistID)
+                  }
+                >
+                  <DeleteOutlined />
+                </Popconfirm>
+              </Popover>,
 
             ]}
           >
-          <Meta title={playlist.title} />
+            <Meta title={playlist.title} />
           </Card>
             <Popover title="Expand, show more detailed progress">
               <Progress
@@ -180,16 +223,16 @@ export default function Dashboard() {
               <RenderCards playlistData={currentlyEnrolled} />
             ) : (
               <Card
-              title="No Courses Enrolled"
-              bordered={false}
-              style={{ width: 300, height: 350, marginTop: 110 }}
-            >
-              <h5 align="left">
-                You haven't enrolled in any course, please{" "}
-                <Link to="/explore">Search</Link> for a course and enroll in it by
-                clicking the <PlusCircleOutlined /> button.
-              </h5>
-            </Card>
+                title="No Courses Enrolled"
+                bordered={false}
+                style={{ width: 300, height: 350, marginTop: 110 }}
+              >
+                <h5 align="left">
+                  You haven't enrolled in any course, please{" "}
+                  <Link to="/explore">Search</Link> for a course and enroll in it by
+                  clicking the <PlusCircleOutlined /> button.
+                </h5>
+              </Card>
             )}
           </div>
         </div>
@@ -211,7 +254,7 @@ export default function Dashboard() {
           </div>
         </div>
       </div>
-      <CoursesPage />
+      <CompletedCoursesPage />
     </div >
 
   );

@@ -1,7 +1,7 @@
 
 
 import firebase from "../../firebase";
-import signInWithGoogle from "../../firestore/Signin";
+import {signInWithGoogle, signOut} from "../../firestore/Signin";
 
 import { useAuthState } from "react-firebase-hooks/auth";
 import logo from "./saarthi.png";
@@ -20,7 +20,7 @@ const navigation = [
   { name: 'Notes', href: '/notes', current: true },
 ]
 const pvt = [
-  { name: 'Dashboard', href: '/', current: true },
+  { name: 'Dashboard', href: '/dashboard', current: true },
   // { name: user.name, href: '/', current: true },
 ]
 
@@ -90,7 +90,7 @@ function Loggedin() {
           <Menu.Item>
             {({ active }) => (
               <button
-                onClick={() => auth.signOut()}
+                onClick={signOut}
                 className={classNames(active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700')}
               >
                 Sign out

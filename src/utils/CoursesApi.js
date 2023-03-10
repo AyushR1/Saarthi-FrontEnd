@@ -12,4 +12,13 @@ const getAllcourses = (setCourses) => {
 }
 
 
-export { getAllcourses };
+const getcompletedcourses = (setCourses) => {
+    axios
+        .get("http://localhost:5000/coursesapicompleted")
+        .then(({ data }) => {
+            console.log('data ---> ', data);
+            setCourses(data)
+        })
+}
+
+export { getAllcourses , getcompletedcourses };

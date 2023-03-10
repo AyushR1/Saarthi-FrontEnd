@@ -33,7 +33,7 @@ const PlaylistItem = ({ playlistID, playlist }) => {
         </Popover>,
         <Popover content="Enroll Course">
           <Popconfirm
-            title="You shouldn't learn two things at once, adding to bookmarks is better, still wanna continue"
+            title="Enroll for this course"
             onConfirm={() => {
               handleAddCourse(playlist.id.playlistId, uid);
             }}
@@ -41,7 +41,7 @@ const PlaylistItem = ({ playlistID, playlist }) => {
             <PlusCircleOutlined key="Enroll" />
           </Popconfirm>
         </Popover>,
-        <Popover content="Open in YouTube, support them!">
+        <Popover content="You should support teeacher! Watch it on YT">
           <a href={yt} target="_blank" rel="noreferrer">
             <YoutubeOutlined key="Open In Youtube" />
           </a>
