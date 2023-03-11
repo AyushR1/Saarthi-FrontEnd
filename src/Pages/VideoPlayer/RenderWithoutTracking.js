@@ -6,7 +6,7 @@ import Navbar from "../../Components/Navbar/Navbar";
 import ReactPlayer from "react-player";
 import getVideos from "../../apis/getVideos";
 import "./VideoPlayer.css";
-
+import axios from "axios";
 const { Sider, Content } = Layout;
 const { Panel } = Collapse;
 
@@ -23,21 +23,41 @@ const RenderWithoutTracking = ({ playlistID }) => {
   const [videoDescription, setVideoDescription] = useState("");
   const selectedMenuItem = currentVideo;
 
-  /**************************
-   * Sets the PlaylistData *
-   **************************/
   useEffect(() => {
     message.error("Your Progress Won't be saved");
-    getVideos(playlistID).then((items) => {
-      setCurrentVideo(items[0].snippet.resourceId.videoId);
-      setPlaylistState({
-        playlistData: items,
-        firstVideo: items[0].snippet.resourceId.videoId,
-        playlistArray: items,
+    axios.get(`http://localhost:5000/enrolled-courses/savedcoursesuid/${playlistID}`)
+      .then(({ data }) => {
+        setCurrentVideo(data.videos[0].videoId);
+        setPlaylistState({
+          playlistData: data,
+          firstVideo: data.videos[0].videoId,
+          playlistArray: data.videos,
+        });
+        setLoading(false);
+        console.log("Hii")
+      })
+      .catch(error => {
+        console.error('Error while fetching enrolled courses:', error);
+
+        // Playlist not found in enrolled courses, retrieve videos using getVideos
+        // getVideos(playlistID).then((items) => {
+        //   setCurrentVideo(items[0].snippet.resourceId.videoId);
+        //   setPlaylistState({
+        //     playlistData: items,
+        //     firstVideo: items[0].snippet.resourceId.videoId,
+        //     playlistArray: items,
+        //   });
+        //   setLoading(false);
+        // }).catch((error) => {
+        //   console.error('Error while fetching playlist videos:', error);
+        //   // Set state variables to indicate failure
+        //   setCurrentVideo(null);
+        //   setPlaylistState(null);
+        //   setLoading(false);
+        // });
       });
-      setLoading(false);
-    });
   }, [playlistID]);
+
 
   useEffect(() => {
     setVideoDescriptionInMarkup();
@@ -121,7 +141,7 @@ const RenderWithoutTracking = ({ playlistID }) => {
             </Menu.Item>
             {playlistState.playlistArray.map((item) => (
               <Menu.Item
-                key={item.snippet.resourceId.videoId}
+                key={item.snippet.resourceId.videoId || item.videoid}
                 className="menu-item"
                 onClick={(e) => {
                   handleMenuItemClick(item.snippet.resourceId.videoId, e);
