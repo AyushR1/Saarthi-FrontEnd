@@ -4,7 +4,6 @@ import ReactLinkify from "react-linkify";
 
 import Navbar from "../../Components/Navbar/Navbar";
 import ReactPlayer from "react-player";
-import getVideos from "../../apis/getVideos";
 import "./VideoPlayer.css";
 import axios from "axios";
 const { Sider, Content } = Layout;

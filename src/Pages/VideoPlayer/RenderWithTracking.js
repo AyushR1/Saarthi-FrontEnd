@@ -4,8 +4,6 @@ import Navbar from "../../Components/Navbar/Navbar";
 import { useCallback, useContext, useEffect, useState } from "react";
 import ReactLinkify from "react-linkify";
 import ReactPlayer from "react-player";
-import getVideos from "../../apis/getVideos";
-import handleUpdateCourse from "../../firestore/updateCourse";
 import { UserContext } from "../../UserContext";
 import "./VideoPlayer.css";
 import axios from "axios";

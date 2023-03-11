@@ -34,19 +34,12 @@ export default function SearchPage() {
         <div>
             <Navbar />
 
-            <div className="container top-16">
+            <div className=" pt-8 md:mx-48  top-6">
                 <div className="mainbody">
-                    <div className="explorer-title ">
-                        <h1 className="text-6xl font-bold text-white">
-                            Explore Courses! Search it here!
-                        </h1>
-                    </div>
-                    <br></br>
                     <div className="allplaylists">
                         <PlaylistsList className="playlist-item" playlists={playlists} />
                     </div>
                 </div>
-                <Footer />
             </div>
         </div>
     );

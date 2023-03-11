@@ -43,6 +43,8 @@ export default function CoursesPage() {
                 <Card
                   key={cardData.id || index}
                   style={({ width: 300 }, { padding: 0 }, { margin: 20 })}
+                  className="bg-gradient-to-b from-purple-100 to-white text-white w-300 p-0 m-20 border transition duration-500 ease-in-out transform hover:shadow-lg hover:-translate-y-1 hover:scale-105"
+      
                   cover={
                     <img
                       alt="example"
@@ -93,8 +95,7 @@ export default function CoursesPage() {
                     <img
                       alt="example"
                       src={cardData.avatar}
-                    />
-                  }
+                    />}
                   actions={[
                     <Link
                       to="/video-player"

@@ -127,7 +127,7 @@ export default function Example() {
     <Disclosure as="nav" className="">
       {({ open }) => (
         <>
-          <div className="md:mx-48 mx:auto max-w-7xl px-2 sm:px-6 lg:px-8">
+          <div className="md:mx-48 mx:auto  px-2 sm:px-6 lg:px-8">
             <div className="relative flex h-16 items-center justify-between">
               <div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
                 {/* Mobile menu button*/}
@@ -159,16 +159,14 @@ export default function Example() {
                       <Link
                         to={item.href}
                         className={classNames(
-                          item.current ? ' text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white',
-                          'px-3 py-2 rounded-md text-sm font-medium'
+                          item.current ? 'text-white' : 'text-gray-300',
+                          'px-3 py-2 rounded-md text-sm font-medium transition-colors duration-300 ease-in-out  hover:bg-sky-500 hover:text-black focus:bg-gray-700 focus:text-white'
                         )}
+                  
+
                       >
                         {item.name}
                       </Link>
-
-                      // <Link className="nav-a" to="/courses">
-                      //   Courses
-                      // </Link>
                     ))}
                     <div>
                       <SearchBar handleFormSubmit={handleSubmit} />
@@ -193,7 +191,7 @@ export default function Example() {
                   as={Link}
                   to={item.href}
                   className={classNames(
-                    item.current ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white',
+                    item.current ? ' text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white',
                     'block px-3 py-2 rounded-md text-base font-medium'
                   )}
                   aria-current={item.current ? 'page' : undefined}

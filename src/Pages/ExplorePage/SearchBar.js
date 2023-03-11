@@ -1,33 +1,46 @@
-import Search from "antd/lib/transfer/search";
 import React from "react";
+import { Input } from "antd";
+import { SearchOutlined } from "@ant-design/icons";
+
+const { Search } = Input;
 
 class SearchBar extends React.Component {
+  state = {
+    searchTerm: "",
+  };
+
   handleChange = (event) => {
     this.setState({
-      term: event.target.value,
+      searchTerm: event.target.value,
     });
   };
+
   handleSubmit = (event) => {
     event.preventDefault();
-    this.props.handleFormSubmit(this.state.term);
+    this.props.handleFormSubmit(this.state.searchTerm);
   };
+
+  handleSearch = (value) => {
+    this.props.handleFormSubmit(value);
+  };
+
   render() {
     return (
-      <div className="items-center justify-center shadow-md">
-        <form onSubmit={this.handleSubmit} className="form">
-          <div className="field">
-            <label htmlFor="playlist-search"></label>
-            
-            <Search
-              onChange={this.handleChange}
-              name="playlist-search"
-              type="text"
-              placeholder="Search.."
-            />
-          </div>
+      <div className="flex justify-center">
+        <form onSubmit={this.handleSubmit}>
+          <Search
+            className=" w-96 justify-center rounded-full shadow-lg"
+            placeholder="Search"
+            enterButton={<SearchOutlined />}
+            size="large"
+            onChange={this.handleChange}
+            value={this.state.searchTerm}
+            onSearch={this.handleSearch}
+          />
         </form>
       </div>
     );
   }
 }
+
 export default SearchBar;
