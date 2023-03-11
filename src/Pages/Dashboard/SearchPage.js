@@ -2,7 +2,6 @@ import { useLocation } from "react-router-dom";
 
 import React, { useState, useEffect } from "react";
 import instance from "../../apis/youtube";
-import Footer from "../../Components/Footer/Footer";
 import "../ExplorePage/ExplorePage.css"
 import PlaylistsList from "../ExplorePage/PlaylistsList";
 import Navbar from "../../Components/Navbar/Navbar"

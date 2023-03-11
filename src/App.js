@@ -10,7 +10,7 @@ import Notes from "./Pages/NotesPage/NotesPage"
 import VideoPlayer from "./Pages/VideoPlayer/VideoPlayer";
 import LandingPage from "./Pages/Dashboard/Landing"
 import SearchPage from "./Pages/Dashboard/SearchPage"
-import LandingHomePage from "./Pages/Dashboard/LandingHomePage";
+import LandingHomePage from "./Pages/Home/LandingHomePage";
 import { UserContext } from "./UserContext";
 
 // Create an instance of the Firebase authentication service.

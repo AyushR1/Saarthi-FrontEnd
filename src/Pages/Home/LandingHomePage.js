@@ -1,6 +1,6 @@
 
 import Navbar from "../../Components/Navbar/Navbar";
-import CoursesPage from "./CoursesPage";
+import CoursesPage from "../../Components/Courses/CoursesPage";
 import { Carousel } from 'antd';
 
 export default function LandingHomePage() {

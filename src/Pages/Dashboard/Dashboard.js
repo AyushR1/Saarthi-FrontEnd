@@ -10,7 +10,7 @@ import "firebase/firestore";
 import React, { useContext, useEffect, useState, useRef } from "react";
 import { Link } from "react-router-dom";
 import Navbar from "../../Components/Navbar/Navbar";
-import firebase, { db } from "../../firebase";
+import firebase from "../../firebase";
 import { UserContext } from "../../UserContext";
 import axios from "axios";
 import CompletedCoursesPage from "./CompletedPage"

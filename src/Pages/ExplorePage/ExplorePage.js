@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import instance from "../../apis/youtube";
-import Footer from "../../Components/Footer/Footer";
 import "./ExplorePage.css";
 import PlaylistsList from "./PlaylistsList";
 import SearchBar from "./SearchBar";
@@ -39,7 +38,6 @@ function ExplorePage() {
             <PlaylistsList className="playlist-item" playlists={playlists} />
           </div>
         </div>
-        <Footer />
       </div>
     </div>
   );

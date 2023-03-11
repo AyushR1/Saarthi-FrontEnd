@@ -1,6 +1,6 @@
 import {signInWithGoogle} from "../../firestore/Signin";
 import Navbar from "../../Components/Navbar/Navbar";
-import CoursesPage from "./CoursesPage";
+import CoursesPage from "../../Components/Courses/CoursesPage";
 
 export default function LandingPage() {
 
