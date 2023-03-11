@@ -2,7 +2,7 @@ import { useLocation } from "react-router-dom";
 
 import React, { useState, useEffect, useContext } from "react";
 import instance from "../../apis/youtube";
-import "../ExplorePage/ExplorePage.css"
+import "./SearchPage.css"
 import Navbar from "../../Components/Navbar/Navbar"
 
 
@@ -16,7 +16,6 @@ import { Avatar, Card, Popconfirm, Popover } from "antd";
 import { Link } from "react-router-dom";
 import handleAddCourse from "../../firestore/addCourse";
 import { UserContext } from "../../UserContext";
-import "../ExplorePage/ExplorePage.css";
 
 const { Meta } = Card;
 

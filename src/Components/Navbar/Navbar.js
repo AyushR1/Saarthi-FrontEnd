@@ -11,8 +11,8 @@ import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
 
 import { Link } from "react-router-dom";
 import React, { useState } from "react";
-import SearchBar from "../../Pages/ExplorePage/SearchBar";
-import "../../Pages/ExplorePage/ExplorePage.css"
+import SearchBar from "../SearchBar/SearchBar";
+import "../../Pages/SearchPage/SearchPage.css"
 import { useNavigate } from "react-router-dom";
 const auth = firebase.auth();
 const navigation = [

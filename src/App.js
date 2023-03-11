@@ -8,7 +8,7 @@ import RenderWithoutTrackingyt from "./Pages/VideoPlayer/RenderWithoutTrackingyt
 import Notes from "./Pages/NotesPage/NotesPage"
 import VideoPlayer from "./Pages/VideoPlayer/VideoPlayer";
 import LandingPage from "./Pages/Dashboard/Landing"
-import SearchPage from "./Pages/Dashboard/SearchPage"
+import SearchPage from "./Pages/SearchPage/SearchPage"
 import LandingHomePage from "./Pages/Home/LandingHomePage";
 import { UserContext } from "./UserContext";
 
