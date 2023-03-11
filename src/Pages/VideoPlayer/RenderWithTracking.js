@@ -14,7 +14,7 @@ const RenderWithTracking = ({ playlistID }) => {
   const [playlistData, setPlaylistData] = useState(null);
 
   let { uid } = useContext(UserContext);
-  if (uid === "") {
+  if (!uid)  {
     uid = localStorage.getItem("uid-saarthi");
   } else {
     localStorage.setItem("uid-saarthi", uid);

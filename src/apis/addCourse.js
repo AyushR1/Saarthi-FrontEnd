@@ -5,7 +5,11 @@ import axios from "axios";
 const handleAddCourse = async (playlistID, uid) => {
 
   const videos = [];
-  if (uid === "") {
+  if (!uid) {
+    uid = localStorage.getItem("uid-saarthi");
+  }
+  console.log(uid)
+  if (!uid) {
     message.error("Not Logged In");
     return;
   }
