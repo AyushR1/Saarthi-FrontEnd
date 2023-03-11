@@ -41,6 +41,12 @@ export default function CoursesPage() {
                 <Card
                   key={cardData.id || index}
                   style={({ width: 300 }, { padding: 0 }, { margin: 20 })}
+                  cover={
+                    <img
+                      alt="example"
+                      src={cardData.avatar}
+                    />
+                  }
                   actions={[
                     <Link
                       to="/video-player"

@@ -3,10 +3,11 @@ import {
   DeleteOutlined,
   ReloadOutlined,
   PlusCircleOutlined,
+  LeftOutlined, RightOutlined
 } from "@ant-design/icons";
 import { Card, message, Popconfirm, Popover, Progress } from "antd";
 import "firebase/firestore";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useState, useRef } from "react";
 import { Link } from "react-router-dom";
 import Navbar from "../../Components/Navbar/Navbar";
 import firebase, { db } from "../../firebase";
@@ -15,7 +16,7 @@ import axios from "axios";
 import CompletedCoursesPage from "./CompletedPage"
 import handleUpdateCourse from "../../firestore/updateCourse";
 import getVideos from "../../apis/getVideos";
-
+import { Carousel } from "antd";
 const { Meta } = Card;
 
 export default function Dashboard() {
@@ -141,85 +142,108 @@ export default function Dashboard() {
       });
     }, []);
 
+    const ref = useRef();
+
     const renderedCards = playlistData.flat().map((playlist) => {
       const progressspec = progressMap[playlist.playlistID];
 
       return (
-        <div className="align-middle justify-items-center">
-          <br></br>
-          <div className=" columns-2 flex">
+        <div key={playlist.playlistID} className="align-middle justify-items-center">
+          <br />
+          <div className="">
             <Card
-              key={playlist.playlistID}
-              className=" max-w-xs md:max-w-sm text-center"
+              className="max-w-xs md:max-w-sm text-center"
               actions={[
                 <Popover title="Start learning">
-                  <Link
-                    to="/video-player" state={{
-                      playlistID: playlist.playlistID,
-                      tracking: true,
-                    }}
-                  >
-
+                  <Link to="/video-player" state={{
+                    playlistID: playlist.playlistID,
+                    tracking: true,
+                  }}>
                     <CaretRightOutlined key="play" />
                   </Link>
                 </Popover>,
                 <Popover title="Delete the course">
                   <Popconfirm
-                    title={
-                      "Are you sure you wanna delete this course, all progress will be lost"
-                    }
+                    title="Are you sure you want to delete this course? All progress will be lost."
                     placement="top"
-                    onConfirm={() =>
-                      handleCourseDelete(playlist.playlistID)
-                    }
+                    onConfirm={() => handleCourseDelete(playlist.playlistID)}
                   >
                     <DeleteOutlined />
                   </Popconfirm>
                 </Popover>,
                 <Popover title="Update the course">
                   <Popconfirm
-                    title={
-                      "Check if new videos added and update"
-                    }
+                    title="Check if new videos have been added and update?"
                     placement="top"
-                    onConfirm={() =>
-                      syncPlayList(playlist.playlistID)
-                    }
+                    onConfirm={() => syncPlayList(playlist.playlistID)}
                   >
                     <ReloadOutlined />
                   </Popconfirm>
                 </Popover>,
-
               ]}
             >
               <Meta title={playlist.title} />
+              <br />
+              <div className="rounded-lg flex items-center justify-center">
+                <Popover title="Your progress">
+                  <Progress type="circle" percent={progressspec} width={185} />
+                </Popover>
+              </div>
             </Card>
-            <div class=" bg-white rounded-lg shadow-lg  flex items-center justify-center">
-
-              <Popover title="Expand, show more detailed progress">
-                <Progress
-                  type="circle"
-                  percent={progressspec}
-                  width={100}
-                ></Progress>
-              </Popover>
-            </div>
           </div>
         </div>
       );
     });
 
+    // from https://react-slick.neostack.com/docs/example/custom-arrows
+    const SampleNextArrow = props => {
+      const { className, style, onClick } = props
+      return (
+        <div
+          className={className}
+          style={{ ...style, display: "block" }}
+          onClick={onClick}
+        >
+          <RightOutlined style={{ fontSize: "24px", color: "white" }} />
+          <span style={{ fontSize: "24px", color: "white" }}></span>
+        </div>)
+    }
+
+
+    const SamplePrevArrow = props => {
+      const { className, style, onClick } = props
+      return (
+        <div
+          className={className}
+          style={{ ...style, display: "block" }}
+          onClick={onClick}
+        >
+          <LeftOutlined style={{ fontSize: "24px", color: "white" }} />
+          <span style={{ fontSize: "24px", color: "white" }}></span>
+        </div>)
+    }
+    const settings = {
+      nextArrow: <SampleNextArrow />,
+      prevArrow: <SamplePrevArrow />
+    }
     return (
       <React.Fragment>
-        <div><h2 class="text-3xl text-white">Enrolled Courses</h2>
-          <div className="playlist-container  h-96 overflow-y-scroll">
+        <div>
+          <h2 className="text-3xl text-white">Enrolled Courses</h2>
+          <div className="playlist-container h-96">
+            {/* Wrap the renderedCards in the Carousel component */}
+            <Carousel ref={ref} arrows {...settings} draggable swipe effect="fade" dots >
+              {renderedCards}
+            </Carousel>
 
-            {renderedCards}
           </div>
+
         </div>
       </React.Fragment>
     );
   };
+
+
 
   return (
 
@@ -229,24 +253,32 @@ export default function Dashboard() {
       <div class=" my-20 flex flex-col md:flex-row  items-center justify-center">
 
         <div class="w-full lg:w-1/2 text-center">
-          <div class=" md:mx-48 w-auto ">
+          <div class=" md:mx-48 w-80 mx-auto ">
             {currentlyEnrolled.length ? (
-              <RenderCards playlistData={currentlyEnrolled} />
+              <div>
+                <RenderCards playlistData={currentlyEnrolled} />
+              </div>
             ) : (
               <div>
-                <h2 class="text-3xl text-white">Total Progress</h2>
                 <br></br>
-                <Card
-                  title="No Courses Enrolled"
-                  bordered={false}
-                  style={{ width: 320, height: 320, marginTop: 110 }}
-                >
-                  <h5 align="left">
-                    You haven't enrolled in any course, please{" "}
-                    <Link to="/explore">Search</Link> for a course and enroll in it by
-                    clicking the <PlusCircleOutlined /> button.
-                  </h5>
-                </Card>
+                <div><h2 class="text-3xl text-white">Enrolled Courses</h2>
+                  <br></br>
+                  <div className="h-96">
+                    <div class=" w-80 h-80 bg-white rounded-lg shadow-lg overflow-hidden flex items-center justify-center">
+                      <Card
+                        title="No Courses Enrolled"
+                        bordered={true}
+                        className=" max-w-xs md:max-w-sm text-center"
+                      >
+                        <h5 align="left">
+                          You haven't enrolled in any course, please{" "}
+                          <Link to="/explore">Search</Link> for a course and enroll in it by
+                          clicking the <PlusCircleOutlined /> button.
+                        </h5>
+                      </Card>
+                    </div>
+                  </div>
+                </div>
               </div>
             )}
           </div>
@@ -254,17 +286,21 @@ export default function Dashboard() {
         </div>
         <div class="w-full lg:w-1/2 text-center">
           <div class="w-80 mx-auto">
+
+            <br></br>
             <h2 class="text-3xl text-white">Total Progress</h2>
             <br></br>
-            <div class=" w-80 h-80 bg-white rounded-lg shadow-lg overflow-hidden flex items-center justify-center">
-              <div class="text-center">
-                <Popover title="Expand, show more detailed progress">
-                  <Progress
-                    type="circle"
-                    percent={totalProgress}
-                    width={300}
-                  ></Progress>
-                </Popover>
+            <div className="h-96">
+              <div class=" w-80 h-80 bg-white rounded-lg shadow-lg overflow-hidden flex items-center justify-center">
+                <div class="text-center">
+                  <Popover title="Expand, show more detailed progress">
+                    <Progress
+                      type="circle"
+                      percent={totalProgress}
+                      width={300}
+                    ></Progress>
+                  </Popover>
+                </div>
               </div>
             </div>
           </div>
