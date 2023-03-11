@@ -24,7 +24,7 @@ const handleAddCourse = async (playlistID, uid) => {
     });
   });
   console.log(videos);
-  axios.post(`http://localhost:5000/add`, {
+  axios.post(`https://saarthi.onrender.com/add`, {
     uid: uid,
     playlistInfo: playlistInfo,
     videos: videos

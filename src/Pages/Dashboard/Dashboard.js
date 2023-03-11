@@ -45,7 +45,7 @@ export default function Dashboard() {
 
   const syncPlayList = async (playlistID) => {
     const youtubePlayList = await getVideos(playlistID);
-    const { data: playlistData } = await axios.get(`http://localhost:5000/enrolled-courses/${uid}/${playlistID}`);
+    const { data: playlistData } = await axios.get(`https://saarthi.onrender.com/enrolled-courses/${uid}/${playlistID}`);
 
     if (youtubePlayList.length > playlistData.videos.length) {
       const newVideos = youtubePlayList.slice(playlistData.videos.length);
@@ -56,7 +56,7 @@ export default function Dashboard() {
 
   const updateCurrentlyEnrolled = () => {
     axios
-      .get(`http://localhost:5000/users/${uid}/enrolled-courses/playlist-info`)
+      .get(`https://saarthi.onrender.com/users/${uid}/enrolled-courses/playlist-info`)
       .then(({ data }) => {
         setCurrentlyEnrolled(data);
       })
@@ -76,7 +76,7 @@ export default function Dashboard() {
   }, []);
 
   const handleCourseDelete = (playlistID) => {
-    axios.delete(`http://localhost:5000/enrolled-courses/${uid}/${playlistID}`)
+    axios.delete(`https://saarthi.onrender.com/enrolled-courses/${uid}/${playlistID}`)
       .then(response => {
         message.success("Course Deleted Succesfully!");
         updateCurrentlyEnrolled(); // Call updateCurrentlyEnrolled after successful deletion
@@ -91,7 +91,7 @@ export default function Dashboard() {
       totalVideos = 0;
 
     try {
-      const response = await axios.get(`http://localhost:5000/enrolled-courses/${uid}`);
+      const response = await axios.get(`https://saarthi.onrender.com/enrolled-courses/${uid}`);
       response.data.forEach((course) => {
         course.videos.forEach((video) => {
           if (video.watched) {
@@ -115,7 +115,7 @@ export default function Dashboard() {
         totalVideos = 0;
 
       try {
-        const response = await axios.get(`http://localhost:5000/enrolled-courses/${uid}/${playlistID}`);
+        const response = await axios.get(`https://saarthi.onrender.com/enrolled-courses/${uid}/${playlistID}`);
 
         response.data.videos.forEach((video) => {
           if (video.watched) {
