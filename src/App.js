@@ -4,7 +4,6 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 import firebase from "./firebase";
 import Dashboard from "./Pages/Dashboard/Dashboard";
-import ExplorePage from "./Pages/ExplorePage/ExplorePage";
 import RenderWithoutTrackingyt from "./Pages/VideoPlayer/RenderWithoutTrackingyt";
 import Notes from "./Pages/NotesPage/NotesPage"
 import VideoPlayer from "./Pages/VideoPlayer/VideoPlayer";
@@ -33,7 +32,6 @@ function App() {
           {/* Define the different routes of the application */}
           <Route exact path="/" element={<LandingHomePage />} />
           <Route path={"/dashboard"} element={<Home />} />
-          <Route path={"/explore"} element={<ExplorePage />} />
           <Route path={"/video-player"} element={<VideoPlayer />} />
           <Route path={"/explore-video"} element={<RenderWithoutTrackingyt />} />
           <Route path={"/notes"} element={<Notes />} />
