@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { addToDo, getAllToDo } from "../../utils/HandleApi";
+import { addToDo, getAllToDo } from "../../apis/HandleApi";
 import Navbar from "../../Components/Navbar/Navbar"
 import {
   CaretRightOutlined,

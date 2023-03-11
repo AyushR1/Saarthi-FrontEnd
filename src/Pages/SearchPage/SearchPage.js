@@ -14,7 +14,7 @@ import {
 import { Avatar, Card, Popconfirm, Popover } from "antd";
 
 import { Link } from "react-router-dom";
-import handleAddCourse from "../../firestore/addCourse";
+import handleAddCourse from "../../apis/addCourse";
 import { UserContext } from "../../UserContext";
 
 const { Meta } = Card;

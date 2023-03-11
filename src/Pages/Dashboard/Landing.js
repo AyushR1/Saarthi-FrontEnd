@@ -1,4 +1,4 @@
-import {signInWithGoogle} from "../../firestore/Signin";
+import {signInWithGoogle} from "../../apis/Signin";
 import Navbar from "../../Components/Navbar/Navbar";
 import CoursesPage from "../../Components/Courses/CoursesPage";
 

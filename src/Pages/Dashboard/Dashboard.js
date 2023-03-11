@@ -14,7 +14,7 @@ import firebase from "../../firebase";
 import { UserContext } from "../../UserContext";
 import axios from "axios";
 import CompletedCoursesPage from "./CompletedPage"
-import handleUpdateCourse from "../../firestore/updateCourse";
+import handleUpdateCourse from "../../apis/updateCourse";
 import getVideos from "../../apis/getVideos";
 import { Carousel } from "antd";
 const { Meta } = Card;

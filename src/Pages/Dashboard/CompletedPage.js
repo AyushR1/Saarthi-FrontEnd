@@ -7,9 +7,9 @@ import { Avatar, Card } from "antd";
 import React, { useContext } from "react";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import handleAddCourse from "../../firestore/addCourse";
+import handleAddCourse from "../../apis/addCourse";
 import { UserContext } from "../../UserContext";
-import { getAllcourses } from "../../utils/CoursesApi";
+import { getAllcourses } from "../../apis/CoursesApi";
 const { Meta } = Card;
 
 

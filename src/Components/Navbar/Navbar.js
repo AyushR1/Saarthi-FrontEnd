@@ -1,7 +1,7 @@
 
 
 import firebase from "../../firebase";
-import { signInWithGoogle, signOut } from "../../firestore/Signin";
+import { signInWithGoogle, signOut } from "../../apis/Signin";
 
 import { useAuthState } from "react-firebase-hooks/auth";
 import logo from "./saarthi.png";
@@ -10,7 +10,7 @@ import { Disclosure, Menu, Transition } from '@headlessui/react'
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
 
 import { Link } from "react-router-dom";
-import React, { useState } from "react";
+import React from "react";
 import SearchBar from "../SearchBar/SearchBar";
 import "../../Pages/SearchPage/SearchPage.css"
 import { useNavigate } from "react-router-dom";
