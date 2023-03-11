@@ -21,15 +21,19 @@ const PlaylistItem = ({ playlistID, playlist }) => {
     <Card
       style={({ width: 50 }, { padding: 0 }, { margin: 20 })}
       actions={[
-        <Popover content="Preview in the Player">
-          <Link
-            to="/video-player" state={{
-              playlistID,
-              tracking: false,
-            }}
-          >
-            <CaretRightOutlined key="Play" />
-          </Link>
+        <Popover content="FREE API has limits. Consider previewing on Youtube!. To track you can sign in and enroll for this course.">
+          <Popconfirm
+            title="FREE API has limits. Consider previewing on Youtube!. To track you can sign in and enroll for this course."
+            onConfirm={<Link
+              to="/explore-video" state={{
+                playlistID
+              }}
+            >
+            
+            </Link>}
+          >  <CaretRightOutlined key="Play" />
+          </Popconfirm>
+          
         </Popover>,
         <Popover content="Enroll Course">
           <Popconfirm

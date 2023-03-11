@@ -1,5 +1,5 @@
 import React from "react";
-import RenderWithoutTracking from "./RenderWithoutTracking";
+import RenderWithoutTrackingsaved from "./RenderWithoutTrackingsaved";
 import RenderWithTracking from "./RenderWithTracking";
 import { useLocation } from "react-router-dom";
 const VideoPlayer = ({ location }) => {
@@ -21,7 +21,7 @@ const VideoPlayer = ({ location }) => {
   if (tracking) {
     return <RenderWithTracking playlistID={playlistID} />;
   } else {
-    return <RenderWithoutTracking playlistID={playlistID} />;
+    return <RenderWithoutTrackingsaved playlistID={playlistID} />;
   }
 };
 

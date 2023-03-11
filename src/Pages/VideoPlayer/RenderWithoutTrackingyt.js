@@ -1,15 +1,20 @@
 import { Checkbox, Collapse, Layout, Menu, message } from "antd";
 import { useEffect, useState } from "react";
 import ReactLinkify from "react-linkify";
-
+import getVideos from "../../apis/getVideos";
 import Navbar from "../../Components/Navbar/Navbar";
 import ReactPlayer from "react-player";
+import { useLocation } from "react-router-dom";
+
 import "./VideoPlayer.css";
 
 const { Sider, Content } = Layout;
 const { Panel } = Collapse;
 
-const RenderWithoutTracking = ({ playlistID }) => {
+const RenderWithoutTrackingyt = () => {
+
+  let { state } = useLocation();
+  let playlistID = state.playlistID;
   playlistID = playlistID && localStorage.getItem("playlist-id");
   const [playlistState, setPlaylistState] = useState({
     playlistData: {},
@@ -26,7 +31,7 @@ const RenderWithoutTracking = ({ playlistID }) => {
    * Sets the PlaylistData *
    **************************/
   useEffect(() => {
-    message.error("Your Progress Won't be saved");
+    message.error("BSDK mana kiyaa tha na?");
     getVideos(playlistID).then((items) => {
       setCurrentVideo(items[0].snippet.resourceId.videoId);
       setPlaylistState({
@@ -183,4 +188,4 @@ const RenderWithoutTracking = ({ playlistID }) => {
   );
 };
 
-export default RenderWithoutTracking;
+export default RenderWithoutTrackingyt;
