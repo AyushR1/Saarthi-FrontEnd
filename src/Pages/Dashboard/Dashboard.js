@@ -250,10 +250,10 @@ export default function Dashboard() {
     <div>
 
       <Navbar />
-      <div class=" my-20 flex flex-col md:flex-row  items-center justify-center">
+      <div className=" my-20 flex flex-col md:flex-row  items-center justify-center">
 
-        <div class="w-full lg:w-1/2 text-center">
-          <div class=" md:mx-48 w-80 mx-auto ">
+        <div className="w-full lg:w-1/2 text-center">
+          <div className=" md:mx-48 w-80 mx-auto ">
             {currentlyEnrolled.length ? (
               <div>
                 <RenderCards playlistData={currentlyEnrolled} />
@@ -261,10 +261,10 @@ export default function Dashboard() {
             ) : (
               <div>
                 <br></br>
-                <div><h2 class="text-3xl text-white">Enrolled Courses</h2>
+                <div><h2 className="text-3xl text-white">Enrolled Courses</h2>
                   <br></br>
                   <div className="h-96">
-                    <div class=" w-80 h-80 bg-white rounded-lg shadow-lg overflow-hidden flex items-center justify-center">
+                    <div className=" w-80 h-80 bg-white rounded-lg shadow-lg overflow-hidden flex items-center justify-center">
                       <Card
                         title="No Courses Enrolled"
                         bordered={true}
@@ -284,15 +284,15 @@ export default function Dashboard() {
           </div>
 
         </div>
-        <div class="w-full lg:w-1/2 text-center">
-          <div class="w-80 mx-auto">
+        <div className="w-full lg:w-1/2 text-center">
+          <div className="w-80 mx-auto">
 
             <br></br>
-            <h2 class="text-3xl text-white">Total Progress</h2>
+            <h2 className="text-3xl text-white">Total Progress</h2>
             <br></br>
             <div className="h-96">
-              <div class=" w-80 h-80 bg-white rounded-lg shadow-lg overflow-hidden flex items-center justify-center">
-                <div class="text-center">
+              <div className=" w-80 h-80 bg-white rounded-lg shadow-lg overflow-hidden flex items-center justify-center">
+                <div className="text-center">
                   <Popover title="Expand, show more detailed progress">
                     <Progress
                       type="circle"

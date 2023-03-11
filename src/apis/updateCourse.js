@@ -21,7 +21,6 @@ const handleUpdateCourse = async (playListId, uid, newVideos) => {
     videos: videos
   })
     .then(response => {
-      console.log(response.data);
       message.info("Course Updated successfully");
     })
     .catch(error => {

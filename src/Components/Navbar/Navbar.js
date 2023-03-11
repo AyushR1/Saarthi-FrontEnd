@@ -19,10 +19,10 @@ const navigation = [
   { name: 'Home', href: '/', current: true },
   { name: 'Notes', href: '/notes', current: true },
 ]
-const pvt = [
-  { name: 'Dashboard', href: '/dashboard', current: true },
-  // { name: user.name, href: '/', current: true },
-]
+// const pvt = [
+//   { name: 'Dashboard', href: '/dashboard', current: true },
+//   // { name: user.name, href: '/', current: true },
+// ]
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
@@ -70,24 +70,26 @@ function Loggedin() {
                 to={"/dashboard"}
                 className={classNames(active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700')}
               >
-            Hii {user.displayName}!
+                Hii {user.displayName}!
               </Link>
 
             )}
           </Menu.Item>
-          {pvt.map((item) => (
+          {/* {pvt.map((item) => ( */}
 
-            <Menu.Item>
-              {({ active }) => (
-                <Link
-                  to={item.href}
-                  className={classNames(active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700')}
-                >
-                  {item.name}
-                </Link>
-              )}
-            </Menu.Item>
-          ))}
+          <Menu.Item>
+            {({ active }) => (
+              <Link
+                // to={item.href}
+                to="/dashboard"
+
+                className={classNames(active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700')}
+              >
+                Dashboard  {/* {item.name} */}
+              </Link>
+            )}
+          </Menu.Item>
+          {/* ))} */}
           <Menu.Item>
             {({ active }) => (
               <button
@@ -107,7 +109,7 @@ function Loggedin() {
 }
 function Loggedout() {
   return (
-    <button onClick={signInWithGoogle} class="py-2 px-2 font-medium text-white rounded hover:bg-blue-500 hover:text-white transition duration-300"
+    <button onClick={signInWithGoogle} className="py-2 px-2 font-medium text-white rounded hover:bg-blue-500 hover:text-white transition duration-300"
     >SignIn</button>
   );
 }
@@ -162,7 +164,7 @@ export default function Example() {
                           item.current ? 'text-white' : 'text-gray-300',
                           'px-3 py-2 rounded-md text-sm font-medium transition-colors duration-300 ease-in-out  hover:bg-sky-500 hover:text-black focus:bg-gray-700 focus:text-white'
                         )}
-                  
+
 
                       >
                         {item.name}

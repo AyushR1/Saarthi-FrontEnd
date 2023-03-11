@@ -1,5 +1,5 @@
 import { message } from "antd";
-import getVideos from "./getVideos";
+import getVideos from "../apis/getVideos";
 import axios from "axios";
 
 const handleAddCourse = async (playlistID, uid) => {
@@ -23,14 +23,12 @@ const handleAddCourse = async (playlistID, uid) => {
       description: item.snippet.description,
     });
   });
-  console.log(videos);
   axios.post(`https://saarthi.onrender.com/add`, {
     uid: uid,
     playlistInfo: playlistInfo,
     videos: videos
   })
     .then(response => {
-      console.log(response.data);
       message.info("Course added successfully");
     })
     .catch(error => {

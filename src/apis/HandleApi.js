@@ -6,9 +6,9 @@ const getAllToDo = (setToDo) => {
     axios
         .get(baseUrl)
         .then(({ data }) => {
-            console.log('data ---> ', data);
             setToDo(data)
         })
+        .catch((err) => console.log(err))
 }
 
 const addToDo = (name, desc, linkcourse, lnknotes, setName, setDesc, setLinkCourse, setLnkNotes, setToDo) => {
@@ -16,7 +16,6 @@ const addToDo = (name, desc, linkcourse, lnknotes, setName, setDesc, setLinkCour
     axios
         .post(`${baseUrl}/save`, { name, desc, linkcourse, lnknotes })
         .then((data) => {
-            console.log(data);
             setName("");
             setDesc("");
             setLinkCourse("");
@@ -46,7 +45,6 @@ const deleteToDo = (_id, setToDo) => {
     axios
         .post(`${baseUrl}/delete`, { _id })
         .then((data) => {
-            console.log(data)
             getAllToDo(setToDo)
         })
         .catch((err) => console.log(err))

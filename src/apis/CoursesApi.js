@@ -6,7 +6,6 @@ const getAllcourses = (setCourses) => {
     axios
         .get(baseUrl)
         .then(({ data }) => {
-            console.log('data ---> ', data);
             setCourses(data)
         })
 }
@@ -16,7 +15,6 @@ const getcompletedcourses = (setCourses) => {
     axios
         .get("https://saarthi.onrender.com/coursesapicompleted")
         .then(({ data }) => {
-            console.log('data ---> ', data);
             setCourses(data)
         })
 }
