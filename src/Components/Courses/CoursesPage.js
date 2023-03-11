@@ -10,7 +10,6 @@ import { Link } from "react-router-dom";
 import handleAddCourse from "../../apis/addCourse";
 import { UserContext } from "../../UserContext";
 
-import firebase from "../../firebase";
 import { getAllcourses } from "../../apis/CoursesApi";
 const { Meta } = Card;
 export default function CoursesPage() {

@@ -1,5 +1,5 @@
 import { message } from "antd";
-import getVideos from "../apis/getVideos";
+import getVideos from "./getVideos";
 import axios from "axios";
 
 const handleAddCourse = async (playlistID, uid) => {

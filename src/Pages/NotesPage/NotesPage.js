@@ -21,7 +21,6 @@ function Notes() {
   const [linkcourse, setLinkCourse] = useState("")
   const [lnknotes, setLnkNotes] = useState("")
   const [saved, setSaved] = useState(false); // add a new state variable for tracking saved state
-  const [searchTerm, setSearchTerm] = useState("");
   const [searchResults, setSearchResults] = useState([]);
 
 
@@ -36,7 +35,6 @@ function Notes() {
 
 
   const handleSearch = async (value) => {
-    setSearchTerm(value);
     try {
       const response = await axios.get(`https://saarthi.onrender.com/search/${value}`);
       setSearchResults(response.data);

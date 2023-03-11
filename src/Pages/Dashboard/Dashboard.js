@@ -140,7 +140,7 @@ export default function Dashboard() {
       playlistData.flat().forEach((playlist) => {
         calculateAndSetSpecificlProgress(playlist.playlistID);
       });
-    }, []);
+    }, [playlistData]);
 
     const ref = useRef();
 
