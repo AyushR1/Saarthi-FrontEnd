@@ -29,7 +29,7 @@ class SearchBar extends React.Component {
       <div className="flex justify-center">
         <form onSubmit={this.handleSubmit}>
           <Search
-            className=" w-96 justify-center rounded-full shadow-lg"
+            className=" md:w-48 lg:w-72 justify-center rounded-full shadow-lg"
             placeholder="Search"
             enterButton={<SearchOutlined />}
             size="large"

@@ -11,7 +11,7 @@ import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
 
 import { Link } from "react-router-dom";
 import React from "react";
-import SearchBar from "../SearchBar/SearchBar";
+import SearchBar from "./SearchBar";
 import "../../Pages/SearchPage/SearchPage.css"
 import { useNavigate } from "react-router-dom";
 const auth = firebase.auth();
@@ -127,7 +127,7 @@ export default function Example() {
     <Disclosure as="nav" className="">
       {({ open }) => (
         <>
-          <div className="md:mx-48 mx:auto  px-2 sm:px-6 lg:px-8">
+          <div className="lg:mx-48 md:mx-16 mx:auto  px-2 sm:px-6 lg:px-8">
             <div className="relative flex h-16 items-center justify-between">
               <div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
                 {/* Mobile menu button*/}
