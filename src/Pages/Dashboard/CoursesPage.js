@@ -22,17 +22,19 @@ export default function CoursesPage() {
   }, [])
   const { uid } = useContext(UserContext);
 
-
-  const user = firebase.auth().currentUser;
-
+  // shuffle the courses array using Fisher-Yates shuffle algorithm
+  for (let i = courses.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [courses[i], courses[j]] = [courses[j], courses[i]];
+  }
   return (
     <div>
       <div className=" mx-8 md:mx-48 max-w-2xl py-16 sm:py-24 lg:max-w-none lg:py-32">
 
-        <h2 className="text-3xl font-bold text-white">Top Picks for You! </h2>
+        <h2 className="text-7xl font-bold bg-clip-text text-yellow-400 to-yellow-500">Top Picks for You! </h2>
         <br>
         </br>
-        <h2 className="text-2xl font-bold text-white"> DSA</h2>
+        <h2 className="text-2xl font-bold text-white">Data Structure & Algorithms</h2>
         <div className="mt-6 space-y-12 lg:grid lg:grid-cols-3 lg:gap-x-6 lg:space-y-0">
           {
             courses
@@ -77,7 +79,7 @@ export default function CoursesPage() {
         </div>
         <br>
         </br>
-        <h2 className="text-2xl font-bold text-white"> Backend</h2>
+        <h2 className="text-2xl font-bold text-white">Backend Development</h2>
         <div className="mt-6 space-y-12 lg:grid lg:grid-cols-3 lg:gap-x-6 lg:space-y-0">
           {
 
@@ -87,6 +89,12 @@ export default function CoursesPage() {
                 <Card
                   key={cardData.id || index}
                   style={({ width: 300 }, { padding: 0 }, { margin: 20 })}
+                  cover={
+                    <img
+                      alt="example"
+                      src={cardData.avatar}
+                    />
+                  }
                   actions={[
                     <Link
                       to="/video-player"
