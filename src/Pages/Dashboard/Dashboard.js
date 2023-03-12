@@ -6,12 +6,10 @@ import {
   LeftOutlined, RightOutlined
 } from "@ant-design/icons";
 import { Card, message, Popconfirm, Popover, Progress } from "antd";
-import "firebase/firestore";
-import React, { useContext, useEffect, useState, useRef } from "react";
+
+import React, {  useEffect, useState, useRef } from "react";
 import { Link } from "react-router-dom";
 import Navbar from "../../Components/Navbar/Navbar";
-import firebase from "../../firebase";
-import { UserContext } from "../../UserContext";
 import axios from "axios";
 import CompletedCoursesPage from "./CompletedPage"
 import handleUpdateCourse from "../../apis/updateCourse";
@@ -22,9 +20,8 @@ const { Meta } = Card;
 export default function Dashboard() {
   const [currentlyEnrolled, setCurrentlyEnrolled] = useState([]);
   const [totalProgress, setTotalProgress] = useState(0);
-  const { setUid } = useContext(UserContext);
-  const uid = firebase.auth().currentUser.uid;
-  setUid(uid);
+  const uid = 0;
+
 
   
 

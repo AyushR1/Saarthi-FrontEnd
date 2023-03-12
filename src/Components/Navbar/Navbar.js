@@ -1,15 +1,16 @@
+
 import { signInWithGoogle, signOut } from "../../apis/Signin";
-import { useEffect, useState } from "react";
 import logo from "./saarthi.png";
 import { Fragment } from 'react'
 import { Disclosure, Menu, Transition } from '@headlessui/react'
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
-import axios from "axios";
+
 import { Link } from "react-router-dom";
 import React from "react";
 import SearchBar from "./SearchBar";
 import "../../Pages/SearchPage/SearchPage.css"
 import { useNavigate } from "react-router-dom";
+
 const navigation = [
   { name: 'Home', href: '/', current: true },
   { name: 'Notes', href: '/notes', current: true },
@@ -23,34 +24,16 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
 }
 function Home() {
-  const [user, setUser] = useState(null);
+  const userLoggedIn = 0;
 
-  useEffect(() => {
-    const getUser = async () => {
-      try {
-        const response = await axios.get("http://localhost:5000/auth/login/success", {
-          withCredentials: true,
-        });
 
-        if (response.status === 200) {
-          setUser(response.data.user);
-        } else {
-          throw new Error("Authentication has failed.");
-        }
-      } catch (err) {
-        console.log(err);
-      }
-    };
-
-    getUser();
-  }, []);
-
-  return user ? <Loggedin user={user} /> : <Loggedout />;
+  return (
+    userLoggedIn ? <Loggedin /> : <Loggedout />
+  );
 }
 
-function Loggedin({user}) {
-
-  
+function Loggedin() {
+ let user ={}
   return (
     <Menu as="div" className="relative ml-3">
       <div>
@@ -58,7 +41,7 @@ function Loggedin({user}) {
           <span className="sr-only">Open user menu</span>
           <img
             className="h-8 w-8 rounded-full"
-            src={user.photos[0].value}
+            src={user.photoURL}
             alt=""
           />
         </Menu.Button>

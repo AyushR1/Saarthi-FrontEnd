@@ -1,7 +1,13 @@
-const signInWithGoogle = () => {
+
+const signInWithGoogle = async () => {
   try {
-     window.open("http://localhost:5000/auth/google", "_self");   
+    const result = 1;
+    const user = result.user;
+
+   
+    localStorage.setItem("uid-saarthi", user.uid);
     // Redirect the user to the desired page upon successful sign-in
+    window.location.href = "http://localhost:3000/dashboard";
   } catch (error) {
     // Handle errors here
     console.error(error);
