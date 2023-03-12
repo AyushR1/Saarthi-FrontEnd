@@ -9,46 +9,41 @@ import LandingPage from "./Pages/Dashboard/Landing"
 import SearchPage from "./Pages/SearchPage/SearchPage"
 import LandingHomePage from "./Pages/Home/LandingHomePage";
 
-import { AuthContext } from './context/AuthContext';
-import { useAuth } from './hooks/useAuth';
-
 // Create an instance of the Firebase authentication service.
 /**
  * The main component of the application.
  */
 function App() {
-
-  const { user, login, logout } = useAuth();
   // Define a state variable for the user ID.
 
-  // const [user, setUser] = useState(null);
-  // const value = { user, setUser };
+  const [user, setUser] = useState(null);
+  const value = { user, setUser };
 
-  // useEffect(() => {
-  //   const getUser = async () => {
-  //     try {
-  //       const response = await axios.get("http://localhost:5000/auth/login/success", {
-  //         withCredentials: false,
-  //       });
+  useEffect(() => {
+    const getUser = async () => {
+      try {
+        const response = await axios.get("http://localhost:5000/auth/login/success", {
+          withCredentials: false,
+        });
 
-  //       if (response.status === 200) {
-  //         setUser(response.data.user);
-  //       } else {
-  //         throw new Error("Authentication has failed.");
-  //       }
-  //     } catch (err) {
-  //       console.log(err);
-  //     }
-  //   };
+        if (response.status === 200) {
+          setUser(response.data.user);
+        } else {
+          throw new Error("Authentication has failed.");
+        }
+      } catch (err) {
+        console.log(err);
+      }
+    };
 
-  //   getUser();
-  // }, []);
+    getUser();
+  }, []);
 
 
 
   return (
     // Provide the user ID context to the application.
-    <AuthContext.Provider value={{ user, setUser }}>
+    <UserContext.Provider value={value}>
       <BrowserRouter>
         <Routes>
           {/* Define the different routes of the application */}
@@ -60,7 +55,7 @@ function App() {
           <Route path={"/search"} element={<SearchPage />} />
         </Routes>
       </BrowserRouter>
-      </AuthContext.Provider>
+    </UserContext.Provider>
   );
 }
 
