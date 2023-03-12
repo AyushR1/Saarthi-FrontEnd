@@ -7,7 +7,7 @@ export default function LandingHomePage() {
 
     return (<div>
         <Navbar />
-        <Carousel autoplay effect="fade" >
+        <Carousel className=" shadow-2xl" autoplay effect="fade" >
             <div className="md:h-96  relative justify-center">
                 <img className=" w-100vh absolute overflow-hidden top-1/2 transform  -translate-y-1/4 md:-translate-y-1/2" src="https://github.com/AyushR1/randomdump/raw/main/Blue%20Pink%20Gradient%20Fashion%20Banner.png" alt="Nature" />
             </div>

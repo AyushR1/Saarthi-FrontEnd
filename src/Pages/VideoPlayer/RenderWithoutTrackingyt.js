@@ -15,7 +15,7 @@ const RenderWithoutTrackingyt = () => {
 
   let { state } = useLocation();
   let playlistID = state.playlistID;
-  playlistID = playlistID && localStorage.getItem("playlist-id");
+  // playlistID = playlistID && localStorage.getItem("playlist-id");
   const [playlistState, setPlaylistState] = useState({
     playlistData: {},
     firstVideo: "",
@@ -104,7 +104,7 @@ const RenderWithoutTrackingyt = () => {
   };
 
   return (
-    <div>
+    <div className="">
       <Navbar />
       <Layout>
         <Sider

@@ -1,6 +1,6 @@
 import { useLocation } from "react-router-dom";
 
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect } from "react";
 import instance from "../../apis/youtube";
 import "./SearchPage.css"
 import Navbar from "../../Components/Navbar/Navbar"
@@ -21,7 +21,6 @@ const { Meta } = Card;
 const PlaylistItem = ({ playlistID, playlist }) => {
     let userJson = localStorage.getItem('usersaarthi');
 let uid = userJson && JSON.parse(userJson).emails[0].value;
- ;
 
     const yt = "https://youtube.com/playlist?list=" + playlistID;
     return (
@@ -33,7 +32,6 @@ let uid = userJson && JSON.parse(userJson).emails[0].value;
                         to="/explore-video" state={{
                             playlistID,
                             tracking: false,
-
                         }}
                         onClick={(e) => {
                             if (!window.confirm("FREE has limits on search and play. Consider previewing on Youtube and then enroll.")) {

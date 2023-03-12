@@ -1,7 +1,7 @@
 import React from "react";
-import RenderWithoutTrackingsaved from "./RenderWithoutTrackingsaved";
 import RenderWithTracking from "./RenderWithTracking";
 import { useLocation } from "react-router-dom";
+import RenderWithoutTrackingyt from "./RenderWithoutTrackingyt";
 const VideoPlayer = ({ location }) => {
   let { state } = useLocation();
   let playlistID = state.playlistID;
@@ -22,7 +22,7 @@ const VideoPlayer = ({ location }) => {
   if (tracking) {
     return <RenderWithTracking playlistID={playlistID} />;
   } else {
-    return <RenderWithoutTrackingsaved playlistID={playlistID} />;
+    return <RenderWithoutTrackingyt playlistID={playlistID} />;
   }
 };
 

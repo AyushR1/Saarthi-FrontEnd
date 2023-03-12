@@ -1,4 +1,4 @@
-import { Checkbox, Collapse, Layout, Menu, message } from "antd";
+import { Checkbox, Collapse, Layout, Menu } from "antd";
 
 import Navbar from "../../Components/Navbar/Navbar";
 import { useCallback, useEffect, useState } from "react";

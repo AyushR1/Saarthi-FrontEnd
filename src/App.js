@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import RedirectPage from "./services/Redirect";
 import Dashboard from "./Pages/Dashboard/Dashboard";
@@ -23,15 +23,25 @@ function App() {
       <Routes>
         {/* Define the different routes of the application */}
         <Route exact path="/" element={<LandingHomePage />} />
-        <Route path={"/dashboard"} element={<Dashboard />} />
+        <Route path={"/dashboard"} element={<Home />} />
         <Route path={"/video-player"} element={<VideoPlayer />} />
         <Route path={"/explore-video"} element={<RenderWithoutTrackingyt />} />
         <Route path={"/notes"} element={<Notes />} />
         <Route path={"/search"} element={<SearchPage />} />
         <Route path={"/loginredirect"} element={<RedirectPage />} />
-        
+
       </Routes>
     </BrowserRouter>
+  );
+}
+
+function Home() {
+
+  let userJson = localStorage.getItem('usersaarthi');
+  let uid = userJson && JSON.parse(userJson).emails[0].value;
+  // Render the appropriate content based on the user's login status.
+  return (
+    !uid ? <LandingPage /> : < Dashboard />
   );
 }
 
