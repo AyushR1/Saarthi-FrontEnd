@@ -2,9 +2,7 @@ import { message } from "antd";
 import axios from "axios"
 const handleUpdateCourse = async (playListId, uid, newVideos) => {
   const videos = [];
-  if (!uid) {
-    uid = localStorage.getItem("uid-saarthi");
-  } 
+
   if (!uid) {
     message.error("Not Logged In");
     return;

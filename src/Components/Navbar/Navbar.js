@@ -23,8 +23,19 @@ const navigation = [
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
 }
+let uid,img,name;
+if (JSON.parse(localStorage.getItem('usersaarthi'))){
+ uid = JSON.parse(localStorage.getItem('usersaarthi')).emails[0].value;
+ img = JSON.parse(localStorage.getItem('usersaarthi')).photos[0].value;
+ name = JSON.parse(localStorage.getItem('usersaarthi')).name.givenName;
+}
+
+let userLoggedIn=1;
+if (!uid) 
+   userLoggedIn = 0;
+
+
 function Home() {
-  const userLoggedIn = 0;
 
 
   return (
@@ -33,7 +44,6 @@ function Home() {
 }
 
 function Loggedin() {
- let user ={}
   return (
     <Menu as="div" className="relative ml-3">
       <div>
@@ -41,7 +51,7 @@ function Loggedin() {
           <span className="sr-only">Open user menu</span>
           <img
             className="h-8 w-8 rounded-full"
-            src={user.photoURL}
+            src={img}
             alt=""
           />
         </Menu.Button>
@@ -63,7 +73,7 @@ function Loggedin() {
                 to={"/dashboard"}
                 className={classNames(active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700')}
               >
-                Hii {user.displayName}!
+                Hii {name}!
               </Link>
 
             )}

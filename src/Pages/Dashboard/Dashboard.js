@@ -7,7 +7,7 @@ import {
 } from "@ant-design/icons";
 import { Card, message, Popconfirm, Popover, Progress } from "antd";
 
-import React, {  useEffect, useState, useRef } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { Link } from "react-router-dom";
 import Navbar from "../../Components/Navbar/Navbar";
 import axios from "axios";
@@ -20,11 +20,8 @@ const { Meta } = Card;
 export default function Dashboard() {
   const [currentlyEnrolled, setCurrentlyEnrolled] = useState([]);
   const [totalProgress, setTotalProgress] = useState(0);
-  const uid = 0;
-
-
-  
-
+  let uid = JSON.parse(localStorage.getItem('usersaarthi')).emails[0].value;
+  console.log(uid)
   // const syncPlayList = useCallback(async () => {
   //   const youtubePlayList = await getVideos(playlistID);
 

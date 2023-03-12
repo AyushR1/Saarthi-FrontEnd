@@ -1,24 +1,11 @@
 
-const signInWithGoogle = async () => {
-  try {
-    const result = 1;
-    const user = result.user;
-
-   
-    localStorage.setItem("uid-saarthi", user.uid);
-    // Redirect the user to the desired page upon successful sign-in
-    window.location.href = "http://localhost:3000/dashboard";
-  } catch (error) {
-    // Handle errors here
-    console.error(error);
-  }
+const signInWithGoogle = () => {
+    window.open("http://localhost:5000/auth/google", "_self");
 };
 
 const signOut = async () => {
   try {
-
-    localStorage.removeItem("uid-saarthi");
-  
+    localStorage.removeItem("usersaarthi");
     // Redirect the user to home
     window.location.href = "http://localhost:3000/";
   } catch (error) {
