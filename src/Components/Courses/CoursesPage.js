@@ -32,7 +32,7 @@ export default function CoursesPage() {
     <div>
       <div className=" mx-8 md:mx-48 max-w-2xl py-16 sm:py-24 lg:max-w-none lg:py-32">
 
-        <h2 className="text-7xl font-bold bg-clip-text text-yellow-400 to-yellow-500">Top Picks for You! </h2>
+        <h2 className="lg:text-7xl md:text-5xl text-4xl font-bold bg-clip-text text-yellow-400 to-yellow-500">Top Picks for You! </h2>
         <br>
         </br>
         <h2 className="text-2xl font-bold text-white">Data Structure & Algorithms</h2>
