@@ -1,8 +1,6 @@
-import React, { useState } from "react";
-import { useAuthState } from "react-firebase-hooks/auth";
+import React, { useState, useEffect } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-
-import firebase from "./firebase";
+import axios from "axios";
 import Dashboard from "./Pages/Dashboard/Dashboard";
 import RenderWithoutTrackingyt from "./Pages/VideoPlayer/RenderWithoutTrackingyt";
 import Notes from "./Pages/NotesPage/NotesPage"
@@ -10,19 +8,38 @@ import VideoPlayer from "./Pages/VideoPlayer/VideoPlayer";
 import LandingPage from "./Pages/Dashboard/Landing"
 import SearchPage from "./Pages/SearchPage/SearchPage"
 import LandingHomePage from "./Pages/Home/LandingHomePage";
-import { UserContext } from "./UserContext";
 
 // Create an instance of the Firebase authentication service.
-const auth = firebase.auth();
-
 /**
  * The main component of the application.
  */
 function App() {
   // Define a state variable for the user ID.
-  const [uid, setUid] = useState("");
-  // Create a context value for the user ID state.
-  const value = { uid, setUid };
+
+  const [user, setUser] = useState(null);
+  const value = { user, setUser };
+
+  useEffect(() => {
+    const getUser = async () => {
+      try {
+        const response = await axios.get("http://localhost:5000/auth/login/success", {
+          withCredentials: false,
+        });
+
+        if (response.status === 200) {
+          setUser(response.data.user);
+        } else {
+          throw new Error("Authentication has failed.");
+        }
+      } catch (err) {
+        console.log(err);
+      }
+    };
+
+    getUser();
+  }, []);
+
+
 
   return (
     // Provide the user ID context to the application.
@@ -31,7 +48,7 @@ function App() {
         <Routes>
           {/* Define the different routes of the application */}
           <Route exact path="/" element={<LandingHomePage />} />
-          <Route path={"/dashboard"} element={<Home />} />
+          <Route path={"/dashboard"} element={user ? <Dashboard /> : <LandingPage />} />
           <Route path={"/video-player"} element={<VideoPlayer />} />
           <Route path={"/explore-video"} element={<RenderWithoutTrackingyt />} />
           <Route path={"/notes"} element={<Notes />} />
@@ -39,19 +56,6 @@ function App() {
         </Routes>
       </BrowserRouter>
     </UserContext.Provider>
-  );
-}
-
-/**
- * The main content of the application, which is either the dashboard or the landing page.
- */
-function Home() {
-  // Determine if a user is logged in.
-  const [userLoggedIn] = useAuthState(auth);
-
-  // Render the appropriate content based on the user's login status.
-  return (
-    userLoggedIn ? <Dashboard /> : <LandingPage />
   );
 }
 

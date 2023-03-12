@@ -1,20 +1,15 @@
-
-
-import firebase from "../../firebase";
 import { signInWithGoogle, signOut } from "../../apis/Signin";
-
-import { useAuthState } from "react-firebase-hooks/auth";
+import { useEffect, useState } from "react";
 import logo from "./saarthi.png";
 import { Fragment } from 'react'
 import { Disclosure, Menu, Transition } from '@headlessui/react'
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
-
+import axios from "axios";
 import { Link } from "react-router-dom";
 import React from "react";
 import SearchBar from "./SearchBar";
 import "../../Pages/SearchPage/SearchPage.css"
 import { useNavigate } from "react-router-dom";
-const auth = firebase.auth();
 const navigation = [
   { name: 'Home', href: '/', current: true },
   { name: 'Notes', href: '/notes', current: true },
@@ -28,19 +23,34 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
 }
 function Home() {
-  const [userLoggedIn] = useAuthState(auth);
+  const [user, setUser] = useState(null);
 
+  useEffect(() => {
+    const getUser = async () => {
+      try {
+        const response = await axios.get("http://localhost:5000/auth/login/success", {
+          withCredentials: true,
+        });
 
-  return (
-    userLoggedIn ? <Loggedin /> : <Loggedout />
-  );
+        if (response.status === 200) {
+          setUser(response.data.user);
+        } else {
+          throw new Error("Authentication has failed.");
+        }
+      } catch (err) {
+        console.log(err);
+      }
+    };
+
+    getUser();
+  }, []);
+
+  return user ? <Loggedin user={user} /> : <Loggedout />;
 }
 
-function Loggedin() {
+function Loggedin({user}) {
 
-
-  const user = firebase.auth().currentUser;
-
+  
   return (
     <Menu as="div" className="relative ml-3">
       <div>
@@ -48,7 +58,7 @@ function Loggedin() {
           <span className="sr-only">Open user menu</span>
           <img
             className="h-8 w-8 rounded-full"
-            src={user.photoURL}
+            src={user.photos[0].value}
             alt=""
           />
         </Menu.Button>

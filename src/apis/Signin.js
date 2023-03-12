@@ -1,15 +1,7 @@
-import firebase from "../firebase";
-const auth = firebase.auth();
-const signInWithGoogle = async () => {
-  const provider = new firebase.auth.GoogleAuthProvider();
+const signInWithGoogle = () => {
   try {
-    const result = await auth.signInWithPopup(provider);
-    const user = result.user;
-
-   
-    localStorage.setItem("uid-saarthi", user.uid);
+     window.open("http://localhost:5000/auth/google", "_self");   
     // Redirect the user to the desired page upon successful sign-in
-    window.location.href = "http://localhost:3000/dashboard";
   } catch (error) {
     // Handle errors here
     console.error(error);
@@ -18,7 +10,6 @@ const signInWithGoogle = async () => {
 
 const signOut = async () => {
   try {
-    await auth.signOut();
 
     localStorage.removeItem("uid-saarthi");
   
