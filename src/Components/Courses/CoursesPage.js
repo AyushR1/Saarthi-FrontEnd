@@ -4,11 +4,10 @@ import {
 } from "@ant-design/icons";
 import { Avatar, Card } from "antd";
 
-import React, { useContext } from "react";
+import React  from "react";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import handleAddCourse from "../../apis/addCourse";
-import { UserContext } from "../../UserContext";
 
 import { getAllcourses } from "../../apis/CoursesApi";
 const { Meta } = Card;
@@ -19,8 +18,9 @@ export default function CoursesPage() {
   useEffect(() => {
     getAllcourses(setCourses)
   }, [])
-  const { uid } = useContext(UserContext);
 
+ let userJson = localStorage.getItem('usersaarthi');
+let uid = userJson && JSON.parse(userJson).emails[0].value;
   // shuffle the courses array using Fisher-Yates shuffle algorithm
   for (let i = courses.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));

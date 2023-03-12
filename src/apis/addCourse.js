@@ -6,7 +6,6 @@ const handleAddCourse = async (playlistID, uid) => {
 
   const videos = [];
 
-  console.log(uid)
   if (!uid) {
     message.error("Not Logged In");
     return;

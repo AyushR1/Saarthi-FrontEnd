@@ -15,12 +15,11 @@ import { Avatar, Card, Popconfirm, Popover } from "antd";
 
 import { Link } from "react-router-dom";
 import handleAddCourse from "../../apis/addCourse";
-import { UserContext } from "../../UserContext";
 
 const { Meta } = Card;
 
 const PlaylistItem = ({ playlistID, playlist }) => {
-    const { uid } = useContext(UserContext);
+    let uid = JSON.parse(localStorage.getItem('usersaarthi')).emails[0].value;
 
     const yt = "https://youtube.com/playlist?list=" + playlistID;
     return (

@@ -153,6 +153,7 @@ export default function Dashboard() {
                 <Popover title="Start learning">
                   <Link to="/video-player" state={{
                     playlistID: playlist.playlistID,
+                    uid: uid,
                     tracking: true,
                   }}>
                     <CaretRightOutlined key="play" />

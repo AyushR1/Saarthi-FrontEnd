@@ -1,24 +1,16 @@
-import { Checkbox, Collapse, Layout, Menu } from "antd";
+import { Checkbox, Collapse, Layout, Menu, message } from "antd";
 
 import Navbar from "../../Components/Navbar/Navbar";
-import { useCallback, useContext, useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import ReactLinkify from "react-linkify";
 import ReactPlayer from "react-player";
-import { UserContext } from "../../UserContext";
 import "./VideoPlayer.css";
 import axios from "axios";
 const { Sider, Content } = Layout;
 const { Panel } = Collapse;
 
-const RenderWithTracking = ({ playlistID }) => {
+const RenderWithTracking = ({ playlistID, uid }) => {
   const [playlistData, setPlaylistData] = useState(null);
-
-  let { uid } = useContext(UserContext);
-  if (!uid)  {
-    uid = localStorage.getItem("uid-saarthi");
-  } else {
-    localStorage.setItem("uid-saarthi", uid);
-  }
 
   const [currentVideo, setCurrentVideo] = useState();
   const [videoDescription, setVideoDescription] = useState("");
