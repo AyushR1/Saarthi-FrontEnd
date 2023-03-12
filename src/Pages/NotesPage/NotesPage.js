@@ -36,7 +36,7 @@ function Notes() {
 
   const handleSearch = async (value) => {
     try {
-      const response = await axios.get(`http://localhost:5000/notes/search/${value}`);
+      const response = await axios.get(`https://saarthi.onrender.com/notes/search/${value}`);
       setSearchResults(response.data);
     } catch (error) {
       console.log(error);

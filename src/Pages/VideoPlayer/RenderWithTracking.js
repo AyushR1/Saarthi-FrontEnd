@@ -20,7 +20,7 @@ const RenderWithTracking = ({ playlistID }) => {
   let uid = userJson && JSON.parse(userJson).emails[0].value;
   const getDataCB = useCallback(async () => {
     axios
-      .get(`http://localhost:5000/user/getvideos/${uid}/${playlistID}`)
+      .get(`https://saarthi.onrender.com/user/getvideos/${uid}/${playlistID}`)
       .then(({ data }) => {
         setPlaylistData(data);
         setFirstUnwatchedVideo(data);
@@ -46,7 +46,7 @@ const RenderWithTracking = ({ playlistID }) => {
 
   const findVideoAndSetWatched = async (videoId, setWatched = false) => {
     try {
-      const response = await axios.get(`http://localhost:5000/user/getvideos/${uid}/${playlistID}`);
+      const response = await axios.get(`https://saarthi.onrender.com/user/getvideos/${uid}/${playlistID}`);
       const data = response.data;
 
       data.videos.forEach((video) => {
@@ -55,7 +55,7 @@ const RenderWithTracking = ({ playlistID }) => {
         }
       });
 
-      await axios.post(`http://localhost:5000/user/updatevideos/${uid}/${playlistID}`, {
+      await axios.post(`https://saarthi.onrender.com/user/updatevideos/${uid}/${playlistID}`, {
         playlistInfo: data.playlistInfo,
         videos: data.videos,
         totalWatched: data.totalWatched + 1,

@@ -1,6 +1,6 @@
 
 const signInWithGoogle = () => {
-    window.open("http://localhost:5000/auth/google", "_self");
+    window.open("https://saarthi.onrender.com/auth/google", "_self");
 };
 
 const signOut = async () => {

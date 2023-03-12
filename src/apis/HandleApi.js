@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-const baseUrl = "http://localhost:5000/notes"
+const baseUrl = "https://saarthi.onrender.com/notes"
 
 const getAllToDo = (setToDo) => {
     axios

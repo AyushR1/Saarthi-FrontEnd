@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-const baseUrl = "http://localhost:5000/courses/get"
+const baseUrl = "https://saarthi.onrender.com/courses/get"
 
 const getAllcourses = (setCourses) => {
     axios
@@ -13,7 +13,7 @@ const getAllcourses = (setCourses) => {
 
 const getcompletedcourses = (setCourses) => {
     axios
-        .get("http://localhost:5000/coursesapicompleted")
+        .get("https://saarthi.onrender.com/coursesapicompleted")
         .then(({ data }) => {
             setCourses(data)
         })

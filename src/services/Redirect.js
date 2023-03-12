@@ -5,7 +5,7 @@ function RedirectPage() {
     useEffect(() => {
         const getUser = async () => {
             try {
-                const response = await axios.get("http://localhost:5000/auth/login/success", {
+                const response = await axios.get("https://saarthi.onrender.com/auth/login/success", {
                     withCredentials: true,
                 });
 

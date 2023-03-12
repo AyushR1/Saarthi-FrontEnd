@@ -17,7 +17,7 @@ const RenderWithoutTrackingsaved = ({ playlistID }) => {
 
   const getDataCB = useCallback(async () => {
     axios
-      .get(`http://localhost:5000/user/getvideos/savedcoursesuid/${playlistID}`)
+      .get(`https://saarthi.onrender.com/user/getvideos/savedcoursesuid/${playlistID}`)
       .then(({ data }) => {
         setPlaylistData(data);
         setFirstUnwatchedVideo(data);
