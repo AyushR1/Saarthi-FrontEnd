@@ -19,7 +19,7 @@ const VideoPlayer = ({ location }) => {
   }
 
   if (tracking) {
-    return <RenderWithTracking playlistID={playlistID} />;
+    return <RenderWithTracking playlistID={{playlistID}} />;
   } else {
     return <RenderWithoutTrackingsaved playlistID={playlistID} />;
   }

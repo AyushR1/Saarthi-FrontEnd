@@ -20,7 +20,9 @@ const { Meta } = Card;
 export default function Dashboard() {
   const [currentlyEnrolled, setCurrentlyEnrolled] = useState([]);
   const [totalProgress, setTotalProgress] = useState(0);
-  let uid = JSON.parse(localStorage.getItem('usersaarthi')).emails[0].value;
+  let userJson = localStorage.getItem('usersaarthi');
+let uid = userJson && JSON.parse(userJson).emails[0].value;
+ ;
   console.log(uid)
   // const syncPlayList = useCallback(async () => {
   //   const youtubePlayList = await getVideos(playlistID);
@@ -153,7 +155,6 @@ export default function Dashboard() {
                 <Popover title="Start learning">
                   <Link to="/video-player" state={{
                     playlistID: playlist.playlistID,
-                    uid: uid,
                     tracking: true,
                   }}>
                     <CaretRightOutlined key="play" />

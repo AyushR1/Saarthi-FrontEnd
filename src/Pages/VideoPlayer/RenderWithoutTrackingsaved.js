@@ -11,8 +11,6 @@ const { Panel } = Collapse;
 
 const RenderWithoutTrackingsaved = ({ playlistID }) => {
   const [playlistData, setPlaylistData] = useState(null);
-
-
   const [currentVideo, setCurrentVideo] = useState();
   const [videoDescription, setVideoDescription] = useState("");
   const selectedMenuItem = currentVideo;

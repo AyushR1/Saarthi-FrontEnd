@@ -4,7 +4,7 @@ import {
 } from "@ant-design/icons";
 import { Avatar, Card } from "antd";
 
-import React  from "react";
+import React from "react";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import handleAddCourse from "../../apis/addCourse";
@@ -19,8 +19,10 @@ export default function CoursesPage() {
     getAllcourses(setCourses)
   }, [])
 
- let userJson = localStorage.getItem('usersaarthi');
-let uid = userJson && JSON.parse(userJson).emails[0].value;
+  let userJson = localStorage.getItem('usersaarthi');
+  let uid = userJson && JSON.parse(userJson).emails[0].value;
+
+
   // shuffle the courses array using Fisher-Yates shuffle algorithm
   for (let i = courses.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
@@ -43,7 +45,7 @@ let uid = userJson && JSON.parse(userJson).emails[0].value;
                   key={cardData.id || index}
                   style={({ width: 300 }, { padding: 0 }, { margin: 20 })}
                   className="bg-gradient-to-b from-purple-100 to-white text-white w-300 p-0 m-20 border transition duration-500 ease-in-out transform hover:shadow-lg hover:-translate-y-1 hover:scale-105"
-      
+
                   cover={
                     <img
                       alt="example"

@@ -15,7 +15,9 @@ const { Meta } = Card;
 export default function CompletedCoursesPage() {
   const [courses, setCourses] = useState([])
   
-  let uid = JSON.parse(localStorage.getItem('usersaarthi')).emails[0].value;
+  let userJson = localStorage.getItem('usersaarthi');
+let uid = userJson && JSON.parse(userJson).emails[0].value;
+ ;
 
   useEffect(() => {
     getAllcourses(setCourses)

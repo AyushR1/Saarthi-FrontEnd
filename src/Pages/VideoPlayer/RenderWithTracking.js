@@ -9,13 +9,15 @@ import axios from "axios";
 const { Sider, Content } = Layout;
 const { Panel } = Collapse;
 
-const RenderWithTracking = ({ playlistID, uid }) => {
+const RenderWithTracking = ({ playlistID }) => {
   const [playlistData, setPlaylistData] = useState(null);
 
   const [currentVideo, setCurrentVideo] = useState();
   const [videoDescription, setVideoDescription] = useState("");
   const selectedMenuItem = currentVideo;
 
+  let userJson = localStorage.getItem('usersaarthi');
+  let uid = userJson && JSON.parse(userJson).emails[0].value;
   const getDataCB = useCallback(async () => {
     axios
       .get(`http://localhost:5000/user/getvideos/${uid}/${playlistID}`)
