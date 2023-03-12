@@ -26,6 +26,8 @@ export default function Dashboard() {
   const uid = firebase.auth().currentUser.uid;
   setUid(uid);
 
+  
+
   // const syncPlayList = useCallback(async () => {
   //   const youtubePlayList = await getVideos(playlistID);
 
@@ -45,7 +47,7 @@ export default function Dashboard() {
 
   const syncPlayList = async (playlistID) => {
     const youtubePlayList = await getVideos(playlistID);
-    const { data: playlistData } = await axios.get(`https://saarthi.onrender.com/enrolled-courses/${uid}/${playlistID}`);
+    const { data: playlistData } = await axios.get(`http://localhost:5000/user/getvideos/${uid}/${playlistID}`);
 
     if (youtubePlayList.length > playlistData.videos.length) {
       const newVideos = youtubePlayList.slice(playlistData.videos.length);
@@ -56,7 +58,7 @@ export default function Dashboard() {
 
   const updateCurrentlyEnrolled = () => {
     axios
-      .get(`https://saarthi.onrender.com/users/${uid}/enrolled-courses/playlist-info`)
+      .get(`http://localhost:5000/user/allcourses/${uid}`)
       .then(({ data }) => {
         setCurrentlyEnrolled(data);
       })
@@ -76,7 +78,7 @@ export default function Dashboard() {
   }, []);
 
   const handleCourseDelete = (playlistID) => {
-    axios.delete(`https://saarthi.onrender.com/enrolled-courses/${uid}/${playlistID}`)
+    axios.delete(`http://localhost:5000/user/deletevideos/${uid}/${playlistID}`)
       .then(response => {
         message.success("Course Deleted Succesfully!");
         updateCurrentlyEnrolled(); // Call updateCurrentlyEnrolled after successful deletion
@@ -91,7 +93,7 @@ export default function Dashboard() {
       totalVideos = 0;
 
     try {
-      const response = await axios.get(`https://saarthi.onrender.com/enrolled-courses/${uid}`);
+      const response = await axios.get(`http://localhost:5000/user/progressallcourses/${uid}`);
       response.data.forEach((course) => {
         course.videos.forEach((video) => {
           if (video.watched) {
@@ -115,7 +117,7 @@ export default function Dashboard() {
         totalVideos = 0;
 
       try {
-        const response = await axios.get(`https://saarthi.onrender.com/enrolled-courses/${uid}/${playlistID}`);
+        const response = await axios.get(`http://localhost:5000/user/getvideos/${uid}/${playlistID}`);
 
         response.data.videos.forEach((video) => {
           if (video.watched) {

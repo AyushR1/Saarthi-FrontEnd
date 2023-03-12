@@ -18,7 +18,7 @@ const handleUpdateCourse = async (playListId, uid, newVideos) => {
       description: item.snippet.description,
     });
   });
-  axios.post(`https://saarthi.onrender.com/updatecourse`, {
+  axios.post(`http://localhost:5000/user/synccoure/uid/playlistID`, {
     uid: uid,
     playlistID: playListId,
     videos: videos
